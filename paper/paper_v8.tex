@@ -111,10 +111,13 @@ Domain & AoA & A@100 & Fwd $\Delta$ & Bwd $\Delta$ \\
 Math        & \textbf{.958} & \textbf{.982} & $-$.001 & $-$.006 \\
 Science     & \textbf{.799} & \textbf{.841} & $-$.010 & $-$.001 \\
 Coding      &  .434 &  .407 & --- & --- \\
-\ \ Baseline (\texttt{tok\_conf}) & .506 & .490 & --- & --- \\
+\midrule
+\multicolumn{5}{l}{\textit{Baselines (all domains, no anchor dependence)}} \\
+\ \ \texttt{tok\_conf} & .506/.809/.506 & .490/.856/.490 & --- & --- \\
+\ \ SC oracle$^\dagger$ & .953/.921/.961 & .953/.921/.961 & --- & --- \\
 \bottomrule
 \end{tabular}
-\caption{Main holdout result. AoA = AUC-of-AUROC; A@100 = AUROC at 100\% anchor. Frozen-basis $\Delta$AUROC is relative to a task-specific basis at the target anchor.}
+\caption{Main holdout result. AoA = AUC-of-AUROC; A@100 = AUROC at 100\% anchor. Values for baselines are math/science/coding. Frozen-basis $\Delta$AUROC is relative to a task-specific basis at the target anchor. $^\dagger$SC oracle = self-consistency upper bound using leave-one-out agreement rate (requires ground-truth labels; not achievable at inference time).}
 \label{tab:positive}
 \end{table}
 
