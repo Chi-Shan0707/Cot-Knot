@@ -1,44 +1,84 @@
+<div align="center">
+
 # Cot-Knot
 
-`Cot-Knot` is a workshop-stage research repo for one central claim:
+### Different Kinds of Knots in Chain-of-Thought
 
-> self-correction in chain-of-thought is **not** a universal quality signal, because different domains contain different kinds of local reasoning knots.
+<p>
+  <img src="https://img.shields.io/badge/status-workshop%20paper-blue" alt="status" />
+  <img src="https://img.shields.io/badge/focus-CoT%20quality%20signals-6f42c1" alt="focus" />
+  <img src="https://img.shields.io/badge/theme-math%20vs%20coding-0a7e5a" alt="theme" />
+  <img src="https://img.shields.io/badge/license-Apache--2.0-orange" alt="license" />
+</p>
 
-This repository is the lightweight public-facing home for the **knot** line of the broader `SVDomain` project.
+*Self-correction is not a universal quality signal.*
 
-## Core idea
+[Paper Overview](#paper-overview) ·
+[Main Claims](#main-claims) ·
+[Knot Taxonomy](#knot-taxonomy) ·
+[Repository Roadmap](#repository-roadmap) ·
+[Citation](#citation)
 
-The project studies when a model's apparent “self-correction” actually means something reliable.
+</div>
 
-In math, local breaks in reasoning can still be compatible with successful rebinding and recovery.
-In coding, superficially similar corrections often correspond to a different object: unstable execution-state serialization, where the text no longer faithfully tracks the latent program state.
+`Cot-Knot` is a paper repository centered on one claim:
 
-The working hypothesis is:
+> superficially similar self-corrections in chain-of-thought do not necessarily mean the same thing across domains.
 
-- **math knots** are often explicit and text-visible
-- **coding knots** are often execution-semantic and only partially visible in prose
-- therefore the same surface pattern of “correction” should not be assumed to carry the same semantics across domains
+---
 
-## Current paper direction
+## Paper Overview
 
-This repo tracks the workshop-paper direction currently developed in the private `SVDomain/workshop` drafts, especially the `paper_v6` line:
+This project studies when an apparently self-corrective chain-of-thought trace actually carries reliable information about answer quality. The repository is organized as a paper-facing workspace for the **Cot-Knot** hypothesis: that chain-of-thought quality signals are meaningful only when the underlying local state dynamics are interpreted in a domain-appropriate way.
 
-- **domain-conditioned CoT quality signals**
-- **different kinds of knots in math vs coding**
-- **local state breaks as mechanism evidence**
-- **warning signs under RL posttraining / score drift**
+The core hypothesis is that **math and coding contain different kinds of knots**:
 
-In the current framing, the paper makes three empirical points:
+- **Math knots** are often explicit, text-visible local state breaks.
+- **Coding knots** are often execution-semantic breaks, where the prose stops faithfully tracking latent program state.
+- Therefore, the same surface pattern of “revision” or “self-correction” should not be assumed to have the same semantics across domains.
 
-1. Compact CoT-based quality probes work strongly in math, reasonably in science, and poorly in coding.
-2. Math and coding exhibit **different knot types**, rather than one universal self-correction phenomenon.
-3. RL posttraining can preserve ranking signal while breaking the original binary operating point of an SFT-era verifier.
+In other words, this repository asks a narrow but important question:
 
-## What “knot” means here
+> when a model appears to “notice and repair” its own reasoning, is that event actually a stable signal of correctness?
 
-“Knot” is used as a mechanism-level term for a local failure or entanglement in reasoning state.
+The paper’s current answer is **no, not universally**. The meaning of self-correction depends on the domain and, in later sections of the project, also on the posttraining regime.
 
-Examples include:
+### Research question
+
+The central research question is:
+
+> **When does self-correction in chain-of-thought behave like a stable quality signal, and when does it stop meaning the same thing?**
+
+The current repository treats this as a measurement and interpretation problem rather than a pure modeling problem. The aim is not only to score traces, but to understand what the apparent corrective behavior is actually doing.
+
+## Main claims
+
+The current paper direction centers on four linked ideas:
+
+- **Domain-conditioned CoT quality signals**
+- **Different knot types in math and coding**
+- **Local state breaks as mechanism evidence**
+- **RL warning signs under score drift and operating-point mismatch**
+
+In the current framing, the paper makes three empirical claims:
+
+1. **Compact CoT-based quality probes are strong in math, reasonable in science, and weak in coding.**
+2. **Math and coding exhibit different knot types rather than one universal self-correction phenomenon.**
+3. **RL posttraining can preserve ranking signal while breaking the original binary operating point of an SFT-era verifier.**
+
+### High-level picture
+
+| Domain | What the trace often reveals | What the knot tends to mean |
+|---|---|---|
+| **Math** | Explicit local state break | A visible repairable reasoning disruption |
+| **Science** | Weaker but still useful process signal | A less concentrated quality signal |
+| **Coding** | Surface revision with weak correctness coupling | Possible failure to faithfully track execution state |
+
+## Knot taxonomy
+
+In this repository, a **knot** is a mechanism-level local entanglement or break in reasoning state.
+
+Typical examples include:
 
 - explicit contradiction
 - incompatible redefinition
@@ -46,39 +86,69 @@ Examples include:
 - unresolved repair
 - lost execution state
 - patchy backtracking
-- branch / loop / index-state inconsistency
+- branch, loop, or index-state inconsistency
 
-The key claim is not merely that knots occur, but that **their meaning depends on domain**.
+The important claim is not merely that knots occur, but that **their semantics depend on domain**.
 
-## Relationship to `SVDomain`
+### Working interpretation
 
-This repository is conceptually extracted from:
+- **Math**: a knot can be explicit, local, and still compatible with successful recovery.
+- **Coding**: a similar-looking correction can mask a deeper execution-state failure.
+- **Takeaway**: the same textual behavior can correspond to different underlying mechanisms.
 
-- `SVDomain/workshop/`
-- `SVDomain/docs/`
-- `SVDomain/results/`
+### Methodological stance
 
-`SVDomain` remains the larger research workspace with experiments, artifacts, and draft iterations.
-`Cot-Knot` is intended to become the smaller repo centered on the workshop paper, knot framing, and minimal reproducible evidence.
+This repository takes a deliberately conservative stance on interpretation:
 
-## Planned contents
+- it separates **full-scale quantitative signal** from **pilot mechanism evidence**
+- it treats annotation-derived knot labels as mechanism probes rather than universal ground truth
+- it emphasizes **domain-conditioned interpretation** over universal verifier narratives
+- it treats RL warning results primarily as evidence of **operating-point failure under regime shift**
 
-As the repo is cleaned and opened up, it will gradually contain:
+## Repository roadmap
 
-- the workshop paper draft
-- a concise project overview
+This repository is intended to hold the paper-facing materials for the project, including:
+
+- workshop paper drafts
 - figure assets for knot/domain comparisons
 - annotation guidelines for local state breaks
-- small tables or summaries needed to support the workshop claims
+- concise result summaries and paper tables
+- minimal scripts or artifacts needed to support the workshop claims
+
+### Intended structure
+
+As the repository matures, it is expected to organize around:
+
+- `paper/` for manuscript sources
+- `figures/` for paper-ready visual assets
+- `notes/` for concise paper-facing research notes
+- `annotations/` for local state break guidelines or examples
+- `artifacts/` for minimal supporting tables or metadata
 
 ## Status
 
-This is an early public scaffold.
+This repository is in an early paper-focused stage.
 
-The current version is intentionally minimal and serves as the initial anchor for the `Cot-Knot` workshop repo while the paper and supporting materials are being separated from the larger internal workspace.
+The current version establishes the framing, identity, and licensing of the project. Paper files, figures, and supporting artifacts will be added incrementally.
+
+## License
+
+This repository is released under the Apache 2.0 License. See `LICENSE`.
+
+## Citation
+
+If you want to cite this repository for now, use a provisional entry like:
+
+```bibtex
+@misc{chi2026cotknot,
+  title        = {Cot-Knot: Different Kinds of Knots in Chain-of-Thought},
+  author       = {Yuhan Chi},
+  year         = {2026},
+  note         = {Workshop paper repository}
+}
+```
 
 ## Contact
 
 Yuhan Chi  
 Fudan University
-
