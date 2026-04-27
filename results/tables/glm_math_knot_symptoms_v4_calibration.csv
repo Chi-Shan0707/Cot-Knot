@@ -1,0 +1,7 @@
+domain,symptom,n_present,prevalence,rate_correct,rate_incorrect,diff_incorrect_minus_correct,spearman_rho_vs_correct,spearman_pval_vs_correct
+math,repair_without_recovery,16,0.6666666666666666,0.5,0.8333333333333334,0.33333333333333337,-0.35355339059327373,0.0901080394599839
+math,variable_binding_drift,10,0.4166666666666667,0.3333333333333333,0.5,0.16666666666666669,-0.16903085094570328,0.4297735472143662
+math,assumption_drift,8,0.3333333333333333,0.3333333333333333,0.3333333333333333,0.0,0.0,1.0
+math,case_split_instability,0,0.0,0.0,0.0,0.0,,
+math,subgoal_frame_loss,0,0.0,0.0,0.0,0.0,,
+math,invariant_drift,0,0.0,0.0,0.0,0.0,,

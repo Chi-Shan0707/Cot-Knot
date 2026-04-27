@@ -1,0 +1,7 @@
+domain,symptom,n_present,prevalence,rate_correct,rate_incorrect,diff_incorrect_minus_correct,spearman_rho_vs_correct,spearman_pval_vs_correct
+coding,variable_role_swap,1,1.0,1.0,,,,
+coding,branch_entanglement,1,1.0,1.0,,,,
+coding,spec_state_drift,0,0.0,0.0,,,,
+coding,loop_state_forgetting,0,0.0,0.0,,,,
+coding,patch_backtracking,0,0.0,0.0,,,,
+coding,invariant_drop,0,0.0,0.0,,,,

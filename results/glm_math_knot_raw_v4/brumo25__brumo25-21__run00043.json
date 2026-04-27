@@ -1,0 +1,30 @@
+{
+  "domain": "math",
+  "dataset": "brumo25",
+  "problem_id": "brumo25-21",
+  "problem_key": "brumo25:brumo25-21",
+  "run_index": 43,
+  "is_correct": 0,
+  "source_report": "/home/jovyan/work/NAD_Next/MUI_HUB/cache/DeepSeek-R1-0528-Qwen3-8B/brumo25/cache_neuron_output_1_act_no_rms_20251126_071142/evaluation_report.json",
+  "think_chars": 15616,
+  "think_total_chars": 84316,
+  "prompt_version": "v4",
+  "glm_raw_content": "{\n  \"knot_present\": \"yes\",\n  \"knot_severity\": 2,\n  \"knot_symptoms\": [\"variable_binding_drift\", \"repair_without_recovery\"],\n  \"primary_trigger\": \"symbol_binding\",\n  \"knot_quote\": \"Now, the edge set must have two pairs each summing to 10. Now, for each choice of corners, we need to assign.\",\n  \"trace_strategy\": \"symbolic_manipulation\",\n  \"reversal_count\": 1,\n  \"state_consistency\": \"recovered_break\",\n  \"recovers_later\": \"yes\",\n  \"open_diagnosis\": \"The model drifts from the variable 'edge set' to 'each choice of corners' without a clear connection, leading to a temporary loss of state. This is later corrected but indicates an instability in the reasoning process.\",\n  \"annotator_confidence\": \"medium\"\n}",
+  "glm_parsed": {
+    "knot_present": "yes",
+    "knot_severity": 2,
+    "knot_symptoms": [
+      "variable_binding_drift",
+      "repair_without_recovery"
+    ],
+    "primary_trigger": "symbol_binding",
+    "knot_quote": "Now, the edge set must have two pairs each summing to 10. Now, for each choice of corners, we need to assign.",
+    "trace_strategy": "symbolic_manipulation",
+    "reversal_count": 1,
+    "state_consistency": "recovered_break",
+    "recovers_later": "yes",
+    "open_diagnosis": "The model drifts from the variable 'edge set' to 'each choice of corners' without a clear connection, leading to a temporary loss of state. This is later corrected but indicates an instability in the reasoning process.",
+    "annotator_confidence": "medium"
+  },
+  "parse_error": null
+}

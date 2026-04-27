@@ -1,0 +1,30 @@
+{
+  "domain": "math",
+  "dataset": "aime24",
+  "problem_id": "89",
+  "problem_key": "aime24:89",
+  "run_index": 17,
+  "is_correct": 1,
+  "source_report": "/home/jovyan/work/NAD_Next/MUI_HUB/cache/DeepSeek-R1-0528-Qwen3-8B/aime24/cache_neuron_output_1_act_no_rms_20250902_025610/evaluation_report.json",
+  "think_chars": 15617,
+  "think_total_chars": 84135,
+  "prompt_version": "v4",
+  "glm_raw_content": "{\n  \"knot_present\": \"yes\",\n  \"knot_severity\": 2,\n  \"knot_symptoms\": [\"assumption_drift\", \"repair_without_recovery\"],\n  \"primary_trigger\": \"assumption_tracking\",\n  \"knot_quote\": \"Therefore, the configuration is maximal. But that's not maximal, since we can add chips. Therefore, we need to exclude configurations where both r = 0 and c = 0.\",\n  \"trace_strategy\": \"symbolic_manipulation\",\n  \"reversal_count\": 1,\n  \"state_consistency\": \"recovered_break\",\n  \"recovers_later\": \"yes\",\n  \"open_diagnosis\": \"The model initially assumes the configuration is maximal, but later realizes it is not, leading to a need to exclude certain configurations. This creates an assumption drift and requires a repair without recovery.\",\n  \"annotator_confidence\": \"medium\"\n}",
+  "glm_parsed": {
+    "knot_present": "yes",
+    "knot_severity": 2,
+    "knot_symptoms": [
+      "assumption_drift",
+      "repair_without_recovery"
+    ],
+    "primary_trigger": "assumption_tracking",
+    "knot_quote": "Therefore, the configuration is maximal. But that's not maximal, since we can add chips. Therefore, we need to exclude configurations where both r = 0 and c = 0.",
+    "trace_strategy": "symbolic_manipulation",
+    "reversal_count": 1,
+    "state_consistency": "recovered_break",
+    "recovers_later": "yes",
+    "open_diagnosis": "The model initially assumes the configuration is maximal, but later realizes it is not, leading to a need to exclude certain configurations. This creates an assumption drift and requires a repair without recovery.",
+    "annotator_confidence": "medium"
+  },
+  "parse_error": null
+}

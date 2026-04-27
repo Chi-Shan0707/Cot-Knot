@@ -1,0 +1,30 @@
+{
+  "domain": "math",
+  "dataset": "aime25",
+  "problem_id": "17",
+  "problem_key": "aime25:17",
+  "run_index": 8,
+  "is_correct": 0,
+  "source_report": "/home/jovyan/work/NAD_Next/MUI_HUB/cache/DeepSeek-R1-0528-Qwen3-8B/aime25/cache_neuron_output_1_act_no_rms_20251126_114548/evaluation_report.json",
+  "think_chars": 15617,
+  "think_total_chars": 97238,
+  "prompt_version": "v4",
+  "glm_raw_content": "{\n  \"knot_present\": \"yes\",\n  \"knot_severity\": 2,\n  \"knot_symptoms\": [\"variable_binding_drift\", \"repair_without_recovery\"],\n  \"primary_trigger\": \"symbol_binding\",\n  \"knot_quote\": \"SE has boundary edges: bottom (boundary), left (internal? No.\",\n  \"trace_strategy\": \"case_analysis\",\n  \"reversal_count\": 1,\n  \"state_consistency\": \"recovered_break\",\n  \"recovers_later\": \"yes\",\n  \"open_diagnosis\": \"The model's reasoning becomes inconsistent when it switches the role of the boundary and internal edges for square SE without immediately correcting the state.\",\n  \"annotator_confidence\": \"medium\"\n}",
+  "glm_parsed": {
+    "knot_present": "yes",
+    "knot_severity": 2,
+    "knot_symptoms": [
+      "variable_binding_drift",
+      "repair_without_recovery"
+    ],
+    "primary_trigger": "symbol_binding",
+    "knot_quote": "SE has boundary edges: bottom (boundary), left (internal? No.",
+    "trace_strategy": "case_analysis",
+    "reversal_count": 1,
+    "state_consistency": "recovered_break",
+    "recovers_later": "yes",
+    "open_diagnosis": "The model's reasoning becomes inconsistent when it switches the role of the boundary and internal edges for square SE without immediately correcting the state.",
+    "annotator_confidence": "medium"
+  },
+  "parse_error": null
+}

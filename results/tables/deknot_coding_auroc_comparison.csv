@@ -1,0 +1,3 @@
+condition,auroc,n_runs,n_knotted,total_chars_removed
+original,0.4782,200,80,0
+de_knotted,0.4686,200,80,113632

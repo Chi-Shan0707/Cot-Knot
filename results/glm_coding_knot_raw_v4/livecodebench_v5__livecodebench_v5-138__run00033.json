@@ -1,0 +1,31 @@
+{
+  "domain": "coding",
+  "dataset": "livecodebench_v5",
+  "problem_id": "livecodebench_v5-138",
+  "problem_key": "livecodebench_v5:livecodebench_v5-138",
+  "run_index": 33,
+  "is_correct": 0,
+  "source_report": "/home/jovyan/work/NAD_Next/MUI_HUB/cache/DeepSeek-R1-0528-Qwen3-8B/livecodebench_v5/cache_neuron_output_1_act_no_rms_20251127_032808/evaluation_report.json",
+  "think_chars": 15618,
+  "think_total_chars": 59566,
+  "prompt_version": "v4",
+  "glm_raw_content": "{\n  \"knot_present\": \"yes\",\n  \"knot_severity\": 2,\n  \"knot_symptoms\": [\"variable_role_swap\", \"branch_entanglement\", \"invariant_drop\"],\n  \"primary_trigger\": \"symbol_binding\",\n  \"knot_quote\": \"The rest (without x and y) must sum to x. The rest sum is total - x - y, so: total - x - y = x => total - y = 2*x => y = (total - 2*x) / 1? Actually, no, that's just an algebraic manipulation.\",\n  \"trace_strategy\": \"spec_then_patch\",\n  \"reversal_count\": 3,\n  \"state_consistency\": \"recovered_break\",\n  \"recovers_later\": \"yes\",\n  \"open_diagnosis\": \"The model's reasoning shows a mix-up in variable roles and branch states, leading to an incorrect algebraic manipulation and invariant drop. The model later corrects these mistakes but demonstrates an unstable state before recovery.\",\n  \"annotator_confidence\": \"medium\"\n}",
+  "glm_parsed": {
+    "knot_present": "yes",
+    "knot_severity": 2,
+    "knot_symptoms": [
+      "variable_role_swap",
+      "branch_entanglement",
+      "invariant_drop"
+    ],
+    "primary_trigger": "symbol_binding",
+    "knot_quote": "The rest (without x and y) must sum to x. The rest sum is total - x - y, so: total - x - y = x => total - y = 2*x => y = (total - 2*x) / 1? Actually, no, that's just an algebraic manipulation.",
+    "trace_strategy": "spec_then_patch",
+    "reversal_count": 3,
+    "state_consistency": "recovered_break",
+    "recovers_later": "yes",
+    "open_diagnosis": "The model's reasoning shows a mix-up in variable roles and branch states, leading to an incorrect algebraic manipulation and invariant drop. The model later corrects these mistakes but demonstrates an unstable state before recovery.",
+    "annotator_confidence": "medium"
+  },
+  "parse_error": null
+}

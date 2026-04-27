@@ -1,0 +1,31 @@
+{
+  "domain": "science",
+  "dataset": "gpqa",
+  "problem_id": "gpqa-22",
+  "problem_key": "gpqa:gpqa-22",
+  "run_index": 22,
+  "is_correct": 1,
+  "source_report": "/home/jovyan/work/NAD_Next/MUI_HUB/cache/DeepSeek-R1-0528-Qwen3-8B/gpqa/cache_neuron_output_1_act_no_rms_20251126_111853/evaluation_report.json",
+  "think_chars": 15621,
+  "think_total_chars": 37624,
+  "prompt_version": "v4",
+  "glm_raw_content": "{\n  \"knot_present\": \"yes\",\n  \"knot_severity\": 2,\n  \"knot_symptoms\": [\"entity_binding_drift\", \"mechanism_frame_swap\", \"constraint_mismatch\"],\n  \"primary_trigger\": \"symbol_binding\",\n  \"knot_quote\": \"2,2-dimethylbut-3-en-1-yl: but-3-en-1-yl means the double bond is between C3 and C4, and C1 is attached. 2,2-dimethyl means two methyl groups on C2. So, it's (CH3)2C-C(CH3)=CH-CH3 or something? Let's sketch it.\",\n  \"trace_strategy\": \"symbolic_manipulation\",\n  \"reversal_count\": 3,\n  \"state_consistency\": \"lost_state\",\n  \"recovers_later\": \"no\",\n  \"open_diagnosis\": \"The model struggles to consistently define the structure of the reactant, leading to confusion in the mechanism and constraints used for the reaction with HBr.\",\n  \"annotator_confidence\": \"medium\"\n}",
+  "glm_parsed": {
+    "knot_present": "yes",
+    "knot_severity": 2,
+    "knot_symptoms": [
+      "entity_binding_drift",
+      "mechanism_frame_swap",
+      "constraint_mismatch"
+    ],
+    "primary_trigger": "symbol_binding",
+    "knot_quote": "2,2-dimethylbut-3-en-1-yl: but-3-en-1-yl means the double bond is between C3 and C4, and C1 is attached. 2,2-dimethyl means two methyl groups on C2. So, it's (CH3)2C-C(CH3)=CH-CH3 or something? Let's sketch it.",
+    "trace_strategy": "symbolic_manipulation",
+    "reversal_count": 3,
+    "state_consistency": "lost_state",
+    "recovers_later": "no",
+    "open_diagnosis": "The model struggles to consistently define the structure of the reactant, leading to confusion in the mechanism and constraints used for the reaction with HBr.",
+    "annotator_confidence": "medium"
+  },
+  "parse_error": null
+}

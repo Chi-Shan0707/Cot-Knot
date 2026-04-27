@@ -1,0 +1,29 @@
+{
+  "domain": "math",
+  "dataset": "aime25",
+  "problem_id": "10",
+  "problem_key": "aime25:10",
+  "run_index": 20,
+  "is_correct": 0,
+  "source_report": "/home/jovyan/work/NAD_Next/MUI_HUB/cache/DeepSeek-R1-0528-Qwen3-8B/aime25/cache_neuron_output_1_act_no_rms_20251126_114548/evaluation_report.json",
+  "think_chars": 15619,
+  "think_total_chars": 69493,
+  "prompt_version": "v4",
+  "glm_raw_content": "{\n  \"knot_present\": \"yes\",\n  \"knot_severity\": 1,\n  \"knot_symptoms\": [\"variable_binding_drift\"],\n  \"primary_trigger\": \"symbol_binding\",\n  \"knot_quote\": \"Now, the graph repeats every 4 units. So from x=-1 to x=3, and then from x=3 to x=7, it should be the same as from x=-1 to x=3.\",\n  \"trace_strategy\": \"symbolic_manipulation\",\n  \"reversal_count\": 0,\n  \"state_consistency\": \"recovered_break\",\n  \"recovers_later\": \"yes\",\n  \"open_diagnosis\": \"The model incorrectly assumes that the function repeats identically from x=3 to x=7, when in fact it should be considered as part of the next period starting at x=7.\",\n  \"annotator_confidence\": \"medium\"\n}",
+  "glm_parsed": {
+    "knot_present": "yes",
+    "knot_severity": 1,
+    "knot_symptoms": [
+      "variable_binding_drift"
+    ],
+    "primary_trigger": "symbol_binding",
+    "knot_quote": "Now, the graph repeats every 4 units. So from x=-1 to x=3, and then from x=3 to x=7, it should be the same as from x=-1 to x=3.",
+    "trace_strategy": "symbolic_manipulation",
+    "reversal_count": 0,
+    "state_consistency": "recovered_break",
+    "recovers_later": "yes",
+    "open_diagnosis": "The model incorrectly assumes that the function repeats identically from x=3 to x=7, when in fact it should be considered as part of the next period starting at x=7.",
+    "annotator_confidence": "medium"
+  },
+  "parse_error": null
+}

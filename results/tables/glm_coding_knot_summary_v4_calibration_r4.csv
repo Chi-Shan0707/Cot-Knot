@@ -1,0 +1,2 @@
+domain,total_runs,n_unique_problems,parse_ok_rate,n_correct,n_incorrect,pct_correct,n_knot_present,knot_prevalence,knot_rate_correct,knot_rate_incorrect,mean_knot_severity,mean_reversal_count,spearman_rho_knot_vs_correct,spearman_pval_knot_vs_correct,spearman_rho_severity_vs_correct,spearman_pval_severity_vs_correct,degenerate_flag
+coding,16,4,1.0,8,8,0.5,16,1.0,1.0,1.0,2.0,2.625,,,,,1

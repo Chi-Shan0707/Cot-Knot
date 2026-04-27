@@ -33,3 +33,13 @@ venv/
 tmp/
 build/
 dist/
+
+# Temp folder (old drafts, scratch, audit files)
+temp/
+
+# Old paper version PDFs (archived; only paper_v12.pdf is tracked)
+paper/paper_v7_5.pdf
+paper/paper_v8.pdf
+paper/paper_v9.pdf
+paper/paper_v10.pdf
+paper/paper_v11.pdf

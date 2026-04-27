@@ -1,0 +1,29 @@
+{
+  "domain": "math",
+  "dataset": "aime25",
+  "problem_id": "23",
+  "problem_key": "aime25:23",
+  "run_index": 1,
+  "is_correct": 0,
+  "source_report": "/home/jovyan/work/NAD_Next/MUI_HUB/cache/DeepSeek-R1-0528-Qwen3-8B/aime25/cache_neuron_output_1_act_no_rms_20251126_114548/evaluation_report.json",
+  "think_chars": 15619,
+  "think_total_chars": 53981,
+  "prompt_version": "v4",
+  "glm_raw_content": "{\n  \"knot_present\": \"no\",\n  \"knot_severity\": 0,\n  \"knot_symptoms\": [\"none\"],\n  \"primary_trigger\": \"none\",\n  \"knot_quote\": \"\",\n  \"trace_strategy\": \"symbolic_manipulation\",\n  \"reversal_count\": 0,\n  \"state_consistency\": \"stable\",\n  \"recovers_later\": \"no\",\n  \"open_diagnosis\": \"The reasoning is consistent and follows a logical progression without any breaks in the active state.\",\n  \"annotator_confidence\": \"high\"\n}",
+  "glm_parsed": {
+    "knot_present": "no",
+    "knot_severity": 0,
+    "knot_symptoms": [
+      "none"
+    ],
+    "primary_trigger": "none",
+    "knot_quote": "",
+    "trace_strategy": "symbolic_manipulation",
+    "reversal_count": 0,
+    "state_consistency": "stable",
+    "recovers_later": "no",
+    "open_diagnosis": "The reasoning is consistent and follows a logical progression without any breaks in the active state.",
+    "annotator_confidence": "high"
+  },
+  "parse_error": null
+}

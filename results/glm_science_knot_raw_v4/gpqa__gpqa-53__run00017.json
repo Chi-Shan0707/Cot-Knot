@@ -1,0 +1,30 @@
+{
+  "domain": "science",
+  "dataset": "gpqa",
+  "problem_id": "gpqa-53",
+  "problem_key": "gpqa:gpqa-53",
+  "run_index": 17,
+  "is_correct": 0,
+  "source_report": "/home/jovyan/work/NAD_Next/MUI_HUB/cache/DeepSeek-R1-0528-Qwen3-8B/gpqa/cache_neuron_output_1_act_no_rms_20251126_111853/evaluation_report.json",
+  "think_chars": 15617,
+  "think_total_chars": 60360,
+  "prompt_version": "v4",
+  "glm_raw_content": "{\n  \"knot_present\": \"yes\",\n  \"knot_severity\": 2,\n  \"knot_symptoms\": [\"mechanism_frame_swap\", \"repair_without_recovery\"],\n  \"primary_trigger\": \"subgoal_frame\",\n  \"knot_quote\": \"For a six-member ring, the diene should have the two alkene groups with the chain having four atoms in between or something.\",\n  \"trace_strategy\": \"symbolic_manipulation\",\n  \"reversal_count\": 3,\n  \"state_consistency\": \"recovered_break\",\n  \"recovers_later\": \"yes\",\n  \"open_diagnosis\": \"The model initially sets up a mechanism for a six-membered ring formation but later revisits the same mechanism with a different interpretation without resolving the inconsistency.\",\n  \"annotator_confidence\": \"medium\"\n}",
+  "glm_parsed": {
+    "knot_present": "yes",
+    "knot_severity": 2,
+    "knot_symptoms": [
+      "mechanism_frame_swap",
+      "repair_without_recovery"
+    ],
+    "primary_trigger": "subgoal_frame",
+    "knot_quote": "For a six-member ring, the diene should have the two alkene groups with the chain having four atoms in between or something.",
+    "trace_strategy": "symbolic_manipulation",
+    "reversal_count": 3,
+    "state_consistency": "recovered_break",
+    "recovers_later": "yes",
+    "open_diagnosis": "The model initially sets up a mechanism for a six-membered ring formation but later revisits the same mechanism with a different interpretation without resolving the inconsistency.",
+    "annotator_confidence": "medium"
+  },
+  "parse_error": null
+}

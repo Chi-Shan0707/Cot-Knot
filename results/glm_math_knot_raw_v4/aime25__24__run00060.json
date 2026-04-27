@@ -1,0 +1,15 @@
+{
+  "domain": "math",
+  "dataset": "aime25",
+  "problem_id": "24",
+  "problem_key": "aime25:24",
+  "run_index": 60,
+  "is_correct": 0,
+  "source_report": "/home/jovyan/work/NAD_Next/MUI_HUB/cache/DeepSeek-R1-0528-Qwen3-8B/aime25/cache_neuron_output_1_act_no_rms_20251126_114548/evaluation_report.json",
+  "think_chars": 15617,
+  "think_total_chars": 108524,
+  "prompt_version": "v4",
+  "glm_raw_content": "{\n  \"knot_present\": \"yes\",\n  \"knot_severity\": 2,\n  \"knot_symptoms\": [\"assumption_drift\", \"repair_without_recovery\"],\n  \"primary_trigger\": \"assumption_tracking\",\n  \"knot_quote\": \"But \"two other people\" might include the possibility that one of them is adjacent, but the condition is \"next to two other people\", so it should be that there are two distinct chairs adjacent to it that are occupied.\",\n  \"trace_strategy\": \"symbolic_manipulation\",\n  \"reversal_count\": 1,\n  \"state_consistency\": \"recovered_break\",\n  \"recovers_later\": \"yes\",\n  \"open_diagnosis\": \"The model's interpretation of the condition 'no person sits next to two other people' shifts from considering adjacency to distinct adjacency without immediate correction, leading to a temporary confusion in the active assumption.\",\n  \"annotator_confidence\": \"medium\"\n}",
+  "glm_parsed": {},
+  "parse_error": "Expecting ',' delimiter: line 6 column 23 (char 183)"
+}

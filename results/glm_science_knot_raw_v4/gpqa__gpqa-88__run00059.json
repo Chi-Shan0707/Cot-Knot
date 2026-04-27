@@ -1,0 +1,30 @@
+{
+  "domain": "science",
+  "dataset": "gpqa",
+  "problem_id": "gpqa-88",
+  "problem_key": "gpqa:gpqa-88",
+  "run_index": 59,
+  "is_correct": 1,
+  "source_report": "/home/jovyan/work/NAD_Next/MUI_HUB/cache/DeepSeek-R1-0528-Qwen3-8B/gpqa/cache_neuron_output_1_act_no_rms_20251126_111853/evaluation_report.json",
+  "think_chars": 15620,
+  "think_total_chars": 35221,
+  "prompt_version": "v4",
+  "glm_raw_content": "{\n  \"knot_present\": \"yes\",\n  \"knot_severity\": 2,\n  \"knot_symptoms\": [\"mechanism_frame_swap\", \"repair_without_recovery\"],\n  \"primary_trigger\": \"mechanism_frame_swap\",\n  \"knot_quote\": \"Perhaps it's a Favorskii rearrangement or something, but that's for alpha-halo ketones. 1,3-dibromoadamantane isn't a ketone; it's just a brominated hydrocarbon.\",\n  \"trace_strategy\": \"mechanism_tracing\",\n  \"reversal_count\": 3,\n  \"state_consistency\": \"recovered_break\",\n  \"recovers_later\": \"yes\",\n  \"open_diagnosis\": \"The model initially considers a Favorskii rearrangement, which is for alpha-halo ketones, but then dismisses 1,3-dibromoadamantane as not being a ketone. This creates a mechanism frame swap that is later corrected by considering other reactions.\",\n  \"annotator_confidence\": \"medium\"\n}",
+  "glm_parsed": {
+    "knot_present": "yes",
+    "knot_severity": 2,
+    "knot_symptoms": [
+      "mechanism_frame_swap",
+      "repair_without_recovery"
+    ],
+    "primary_trigger": "mechanism_frame_swap",
+    "knot_quote": "Perhaps it's a Favorskii rearrangement or something, but that's for alpha-halo ketones. 1,3-dibromoadamantane isn't a ketone; it's just a brominated hydrocarbon.",
+    "trace_strategy": "mechanism_tracing",
+    "reversal_count": 3,
+    "state_consistency": "recovered_break",
+    "recovers_later": "yes",
+    "open_diagnosis": "The model initially considers a Favorskii rearrangement, which is for alpha-halo ketones, but then dismisses 1,3-dibromoadamantane as not being a ketone. This creates a mechanism frame swap that is later corrected by considering other reactions.",
+    "annotator_confidence": "medium"
+  },
+  "parse_error": null
+}

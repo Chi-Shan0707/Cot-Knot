@@ -1,0 +1,15 @@
+{
+  "domain": "math",
+  "dataset": "aime25",
+  "problem_id": "21",
+  "problem_key": "aime25:21",
+  "run_index": 18,
+  "is_correct": 1,
+  "source_report": "/home/jovyan/work/NAD_Next/MUI_HUB/cache/DeepSeek-R1-0528-Qwen3-8B/aime25/cache_neuron_output_1_act_no_rms_20251126_114548/evaluation_report.json",
+  "think_chars": 15616,
+  "think_total_chars": 45974,
+  "prompt_version": "v4",
+  "glm_raw_content": "{\n  \"knot_present\": \"yes\",\n  \"knot_severity\": 2,\n  \"knot_symptoms\": [\"assumption_drift\", \"repair_without_recovery\"],\n  \"primary_trigger\": \"assumption_tracking\",\n  \"knot_quote\": \"Moreover, the subsets that intersect both S_a and S_b are those that are not contained in A \\ S_a and not contained in A \\ S_b, but actually, a subset can be contained in A \\ S_a but still intersect S_b, no.\",\n  \"trace_strategy\": \"symbolic_manipulation\",\n  \"reversal_count\": 1,\n  \"state_consistency\": \"recovered_break\",\n  \"recovers_later\": \"yes\",\n  \"open_diagnosis\": \"The model drifts from the assumption that subsets cannot intersect A \\ S_a and A \\ S_b simultaneously, which is later corrected but leads to confusion.\",\n  \"annotator_confidence\": \"medium\"\n}",
+  "glm_parsed": {},
+  "parse_error": "Invalid \\escape: line 6 column 110 (char 270)"
+}

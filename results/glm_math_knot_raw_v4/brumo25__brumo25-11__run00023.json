@@ -1,0 +1,30 @@
+{
+  "domain": "math",
+  "dataset": "brumo25",
+  "problem_id": "brumo25-11",
+  "problem_key": "brumo25:brumo25-11",
+  "run_index": 23,
+  "is_correct": 0,
+  "source_report": "/home/jovyan/work/NAD_Next/MUI_HUB/cache/DeepSeek-R1-0528-Qwen3-8B/brumo25/cache_neuron_output_1_act_no_rms_20251126_071142/evaluation_report.json",
+  "think_chars": 15618,
+  "think_total_chars": 112962,
+  "prompt_version": "v4",
+  "glm_raw_content": "{\n  \"knot_present\": \"yes\",\n  \"knot_severity\": 2,\n  \"knot_symptoms\": [\"variable_binding_drift\", \"repair_without_recovery\"],\n  \"primary_trigger\": \"symbol_binding\",\n  \"knot_quote\": \"For each vertex i, the number of vertices at circular distance d is: For d=1,2,3,4: two vertices each, except d=5: one vertex. As above for i=1.\",\n  \"trace_strategy\": \"symbolic_manipulation\",\n  \"reversal_count\": 1,\n  \"state_consistency\": \"recovered_break\",\n  \"recovers_later\": \"yes\",\n  \"open_diagnosis\": \"The model drifts in its variable binding, confusing the number of vertices at a given circular distance, and later corrects itself without a clear explanation.\",\n  \"annotator_confidence\": \"medium\"\n}",
+  "glm_parsed": {
+    "knot_present": "yes",
+    "knot_severity": 2,
+    "knot_symptoms": [
+      "variable_binding_drift",
+      "repair_without_recovery"
+    ],
+    "primary_trigger": "symbol_binding",
+    "knot_quote": "For each vertex i, the number of vertices at circular distance d is: For d=1,2,3,4: two vertices each, except d=5: one vertex. As above for i=1.",
+    "trace_strategy": "symbolic_manipulation",
+    "reversal_count": 1,
+    "state_consistency": "recovered_break",
+    "recovers_later": "yes",
+    "open_diagnosis": "The model drifts in its variable binding, confusing the number of vertices at a given circular distance, and later corrects itself without a clear explanation.",
+    "annotator_confidence": "medium"
+  },
+  "parse_error": null
+}

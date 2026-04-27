@@ -1,0 +1,31 @@
+{
+  "domain": "science",
+  "dataset": "gpqa",
+  "problem_id": "gpqa-37",
+  "problem_key": "gpqa:gpqa-37",
+  "run_index": 57,
+  "is_correct": 0,
+  "source_report": "/home/jovyan/work/NAD_Next/MUI_HUB/cache/DeepSeek-R1-0528-Qwen3-8B/gpqa/cache_neuron_output_1_act_no_rms_20251126_111853/evaluation_report.json",
+  "think_chars": 15620,
+  "think_total_chars": 41792,
+  "prompt_version": "v4",
+  "glm_raw_content": "{\n  \"knot_present\": \"yes\",\n  \"knot_severity\": 2,\n  \"knot_symptoms\": [\"mechanism_frame_swap\", \"constraint_mismatch\", \"repair_without_recovery\"],\n  \"primary_trigger\": \"symbol_binding\",\n  \"knot_quote\": \"Perhaps the iminium ion is hydrolyzed, and the sequence is for a different reaction. But LDA is not for hydrolysis.\",\n  \"trace_strategy\": \"mechanism_tracing\",\n  \"reversal_count\": 3,\n  \"state_consistency\": \"lost_state\",\n  \"recovers_later\": \"no\",\n  \"open_diagnosis\": \"The model struggles to maintain a consistent mechanism frame for the reaction, switching between hydrolysis and alkylation without resolving the inconsistency. The constraint of using LDA for hydrolysis is violated without proper explanation or resolution.\",\n  \"annotator_confidence\": \"medium\"\n}",
+  "glm_parsed": {
+    "knot_present": "yes",
+    "knot_severity": 2,
+    "knot_symptoms": [
+      "mechanism_frame_swap",
+      "constraint_mismatch",
+      "repair_without_recovery"
+    ],
+    "primary_trigger": "symbol_binding",
+    "knot_quote": "Perhaps the iminium ion is hydrolyzed, and the sequence is for a different reaction. But LDA is not for hydrolysis.",
+    "trace_strategy": "mechanism_tracing",
+    "reversal_count": 3,
+    "state_consistency": "lost_state",
+    "recovers_later": "no",
+    "open_diagnosis": "The model struggles to maintain a consistent mechanism frame for the reaction, switching between hydrolysis and alkylation without resolving the inconsistency. The constraint of using LDA for hydrolysis is violated without proper explanation or resolution.",
+    "annotator_confidence": "medium"
+  },
+  "parse_error": null
+}

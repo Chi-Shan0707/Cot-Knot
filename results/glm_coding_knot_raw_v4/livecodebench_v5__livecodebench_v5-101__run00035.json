@@ -1,0 +1,31 @@
+{
+  "domain": "coding",
+  "dataset": "livecodebench_v5",
+  "problem_id": "livecodebench_v5-101",
+  "problem_key": "livecodebench_v5:livecodebench_v5-101",
+  "run_index": 35,
+  "is_correct": 1,
+  "source_report": "/home/jovyan/work/NAD_Next/MUI_HUB/cache/DeepSeek-R1-0528-Qwen3-8B/livecodebench_v5/cache_neuron_output_1_act_no_rms_20251127_032808/evaluation_report.json",
+  "think_chars": 15617,
+  "think_total_chars": 51736,
+  "prompt_version": "v4",
+  "glm_raw_content": "{\n  \"knot_present\": \"yes\",\n  \"knot_severity\": 2,\n  \"knot_symptoms\": [\"spec_state_drift\", \"variable_role_swap\", \"branch_entanglement\"],\n  \"primary_trigger\": \"repair_loop\",\n  \"knot_quote\": \"The answer is the product of (k+1) for each '0' in the target grid, where k is the number of consecutive '1's following the '0' or something.\",\n  \"trace_strategy\": \"patchy_backtracking\",\n  \"reversal_count\": 3,\n  \"state_consistency\": \"lost_state\",\n  \"recovers_later\": \"no\",\n  \"open_diagnosis\": \"The model's reasoning shows a series of attempts to find a pattern for the solution, but each attempt leads to a contradiction or an unstable state, indicating a loss of the active coding state.\",\n  \"annotator_confidence\": \"medium\"\n}",
+  "glm_parsed": {
+    "knot_present": "yes",
+    "knot_severity": 2,
+    "knot_symptoms": [
+      "spec_state_drift",
+      "variable_role_swap",
+      "branch_entanglement"
+    ],
+    "primary_trigger": "repair_loop",
+    "knot_quote": "The answer is the product of (k+1) for each '0' in the target grid, where k is the number of consecutive '1's following the '0' or something.",
+    "trace_strategy": "patchy_backtracking",
+    "reversal_count": 3,
+    "state_consistency": "lost_state",
+    "recovers_later": "no",
+    "open_diagnosis": "The model's reasoning shows a series of attempts to find a pattern for the solution, but each attempt leads to a contradiction or an unstable state, indicating a loss of the active coding state.",
+    "annotator_confidence": "medium"
+  },
+  "parse_error": null
+}

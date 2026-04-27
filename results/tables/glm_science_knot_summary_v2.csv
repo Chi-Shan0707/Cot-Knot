@@ -1,0 +1,11 @@
+metric,value
+protocol,v2_replacement
+total_runs,120
+n_positive,11
+prevalence,0.0917
+pos_in_correct,0.1406
+pos_in_incorrect,0.0357
+spearman_rho,0.1814
+spearman_pval,0.0474
+mean_severity,0.25
+degenerate,False

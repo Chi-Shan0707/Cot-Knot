@@ -1,0 +1,30 @@
+{
+  "domain": "coding",
+  "dataset": "livecodebench_v5",
+  "problem_id": "livecodebench_v5-75",
+  "problem_key": "livecodebench_v5:livecodebench_v5-75",
+  "run_index": 46,
+  "is_correct": 0,
+  "source_report": "/home/jovyan/work/NAD_Next/MUI_HUB/cache/DeepSeek-R1-0528-Qwen3-8B/livecodebench_v5/cache_neuron_output_1_act_no_rms_20251127_032808/evaluation_report.json",
+  "think_chars": 15613,
+  "think_total_chars": 64070,
+  "prompt_version": "v4",
+  "glm_raw_content": "{\n  \"knot_present\": \"yes\",\n  \"knot_severity\": 2,\n  \"knot_symptoms\": [\"variable_role_swap\", \"invariant_drop\"],\n  \"primary_trigger\": \"subgoal_frame\",\n  \"knot_quote\": \"We are only concerned with the houses that are on the path. The path is broken down into segments (each move).\",\n  \"trace_strategy\": \"spec_then_patch\",\n  \"reversal_count\": 2,\n  \"state_consistency\": \"recovered_break\",\n  \"recovers_later\": \"yes\",\n  \"open_diagnosis\": \"The model initially focuses on the path and segments but later forgets to account for vertical segments, leading to an invariant drop and variable role swap between horizontal and vertical segment handling.\",\n  \"annotator_confidence\": \"medium\"\n}",
+  "glm_parsed": {
+    "knot_present": "yes",
+    "knot_severity": 2,
+    "knot_symptoms": [
+      "variable_role_swap",
+      "invariant_drop"
+    ],
+    "primary_trigger": "subgoal_frame",
+    "knot_quote": "We are only concerned with the houses that are on the path. The path is broken down into segments (each move).",
+    "trace_strategy": "spec_then_patch",
+    "reversal_count": 2,
+    "state_consistency": "recovered_break",
+    "recovers_later": "yes",
+    "open_diagnosis": "The model initially focuses on the path and segments but later forgets to account for vertical segments, leading to an invariant drop and variable role swap between horizontal and vertical segment handling.",
+    "annotator_confidence": "medium"
+  },
+  "parse_error": null
+}

@@ -1,169 +1,192 @@
 <div align="center">
 
-# Cot-Knot
+# cot-signal
 
-### CoT Quality Signals Are Domain-Conditioned: A Measurement Perspective on Different Knot Types in Math and Coding
+### Code Correctness Is Not in the Text:<br>Five Methods, One Ceiling — Convergent Evidence for CoT Quality Measurement Breakdown in Coding
 
 <p>
-  <img src="https://img.shields.io/badge/status-workshop%20paper-blue" alt="status" />
-  <img src="https://img.shields.io/badge/focus-measurement%20perspective-6f42c1" alt="focus" />
-  <img src="https://img.shields.io/badge/theme-math%20vs%20coding-0a7e5a" alt="theme" />
+  <img src="https://img.shields.io/badge/status-workshop%20paper%20v12-blue" alt="status" />
+  <img src="https://img.shields.io/badge/methods-5%20convergent-6f42c1" alt="methods" />
+  <img src="https://img.shields.io/badge/domains-math%20%7C%20science%20%7C%20coding-0a7e5a" alt="domains" />
   <img src="https://img.shields.io/badge/license-Apache--2.0-orange" alt="license" />
 </p>
 
-*Self-correction is not a universal quality signal.*
+> **Suggested new name for this repository:** `cot-signal`
+> *(The current name `Cot-Knot` was coined early in the project around the knot-annotation framing.
+> The paper has grown into a broader measurement study of whether CoT traces carry quality signals at all —
+> `cot-signal` is shorter, more general, and maps directly to the central question.)*
 
-[Paper Overview](#paper-overview) ·
-[Main Claims](#main-claims) ·
-[Knot Taxonomy](#knot-taxonomy) ·
-[Annotation Validity](#annotation-validity) ·
+*Within this feature family, code correctness is not in the text.*
+
+[Core Finding](#core-finding) ·
+[Five Methods](#five-methods-one-ceiling) ·
+[Results](#results) ·
 [Repository Structure](#repository-structure) ·
+[Reproduce](#reproduce) ·
 [Citation](#citation)
 
 </div>
 
-`Cot-Knot` is a paper repository centered on one claim:
+---
 
-> CoT quality signals — including compact verifier probes built on self-correction features — are **domain-conditioned** rather than universal.
+## Core Finding
 
-The project takes a **measurement perspective**: it asks not only whether a probe predicts correctness, but whether the annotation protocol that grounds the probe is itself valid across domains.
+We test whether token-trajectory features (per-token entropy signals + text-trajectory statistics)
+encode coding correctness in chain-of-thought traces.
+We use **five independent methods** on the same feature family, applied to three domains
+(math competitions, science, coding) with a single model — **DeepSeek-R1-0528-Qwen3-8B**.
+
+**All five methods converge on the same answer for coding: no.**
+
+| Domain | AUC-of-AUROC | AUROC@100% | Reranking Δ pass@1 |
+|--------|:------------:|:----------:|:------------------:|
+| **Math** | **0.958** [0.931, 0.980] | **0.982** | **+10.0%** |
+| **Science** | **0.799** [0.775, 0.822] | **0.841** | **+8.0%** |
+| Coding | 0.434 | 0.407 | −0.6% |
+
+The coding probe falls *below* a single-feature token-confidence baseline (0.506). No method
+in our study lifts coding AUROC meaningfully above chance at full labels.
 
 ---
 
-## Paper Overview
+## Five Methods, One Ceiling
 
-The paper studies when a compact probe built on chain-of-thought self-correction features carries reliable information about answer quality. The central finding is that the same surface pattern of "revision" or "self-correction" does not behave identically across domains — and that the annotation protocol needed to operationalize the concept breaks down differently in math vs. coding.
+| # | Method | Best coding result | Verdict |
+|---|--------|-------------------|---------|
+| 1 | Interpretable probe (LogReg + SVD) | AoA 0.434 / AUROC@100 0.407 | Below baseline |
+| 2 | Broad feature sweep (83 scalars) | AUROC 0.556 (top-4 combo) | Marginal |
+| 3 | Nonlinear MLP classifier | AUROC 0.499–0.507 | No change |
+| 4 | **SSL pre-training** (42K unlabeled runs) | 0.537 at lf=5%; **0.454 at lf=100%** | Reg. only; ceiling persists |
+| 5 | Token-level de-knotting ablation | AUROC Δ = +0.006 | Neutral |
 
-The measurement framing distinguishes this project from standard verifier benchmarking. Rather than asking only "does the probe score correlate with correctness?", it asks: "is the construct being measured the same construct across domains?"
+**Why SSL is the decisive experiment.** Self-supervised pre-training on 42,000 unlabeled CoT
+traces — including a domain-specific variant with VICReg anti-collapse, 5-term structured loss,
+and 500 training epochs — tops out near AUROC 0.5 for coding at full labels. The training loss
+decreases (structure is learned), but AUROC stays flat (correctness is not part of that structure).
+This rules out label scarcity as the bottleneck.
 
-The paper's current answer is **no**. Math knots are explicit, text-visible local state breaks that annotators agree on and that predict correctness. Coding knots, as originally formulated, are annotation-invalid and predictively weak. The project proposes a replacement coding protocol (execution-semantic breaks) that improves both annotation agreement and conceptual precision.
+**Why the de-knotting result matters.** Properly removing "knot" token spans (circular reasoning segments)
+from all five per-token signal arrays via fast-tokenizer offset mapping:
+- Math: AUROC *drops* by 0.049 — knot tokens are the discriminative signal itself
+- Coding: AUROC changes by +0.006 — no masking strategy recovers signal
 
-### Research question
+---
 
-> **When does self-correction in chain-of-thought behave like a stable quality signal, and when does it stop meaning the same thing?**
+## Results
 
-The treatment is a measurement and interpretation problem, not a pure modeling problem.
+All quantitative claims reproduce from `results/tables/`. Key tables:
 
-## Main claims
+| File | Contents |
+|------|----------|
+| `results/tables/bon_reranking_domain_pass1_ci.csv` | Best-of-N=64 pass@1 with bootstrap 95% CI |
+| `results/tables/deknot_alldomains_v2.csv` | De-knotting ablation: all 3 domains, v2 (proper token masking) |
+| `results/tables/glm_knot_findings_v4.md` | Knot annotation summary (math/science/coding) |
+| `results/tables/aoa_bootstrap_ci.csv` | AoA bootstrap CI by domain |
 
-The paper makes three linked empirical claims:
+### SSL results
 
-1. **Compact CoT-based quality probes are strong in math, reasonable in science, and weak in coding.** (AUC-of-AUROC: math 0.958, science 0.799, coding 0.434 — below the 0.506 token-confidence baseline.)
-2. **Math and coding exhibit different knot types rather than one universal self-correction phenomenon.** The domain difference is not just quantitative but reflects a construct-validity failure for coding under the original annotation protocol.
-3. **RL posttraining can preserve ranking signal while breaking the original binary operating point of an SFT-era verifier.** (FPR rises from 0.982 → 0.998; only 8 / 4352 wrong runs rejected at step 1000.)
+SSL experiments are documented in `scripts/` and full results in
+`/home/jovyan/work/SVDomain/results/tables/domain_specific_ssl_v2.csv` (not in this repo — path-local).
 
-### High-level picture
+Key SSL v2 numbers at anchor=100%:
 
-| Domain | Probe AUROC@100% | AUC-of-AUROC | Annotation validity |
-|---|---|---|---|
-| **Math** | 0.982 | 0.958 | κ = 0.603 (acceptable) |
-| **Science** | 0.841 | 0.799 | — |
-| **Coding** | < 0.5 | 0.434 | κ = 0.0 (original); κ = 0.329 (execution-break protocol) |
+| Domain | no_svd_lr (lf=5%) | ssl_v2_r24 (lf=5%) | Δ | ssl_v2_r24 (lf=100%) |
+|--------|:-----------------:|:------------------:|:-:|:--------------------:|
+| Math    | 0.898 | 0.896 | −0.2pp | 0.944 |
+| Science | 0.607 | **0.674** | +6.7pp | 0.762 |
+| Coding  | 0.488 | **0.537** | +4.9pp | **0.454** ← ceiling |
 
-## Knot taxonomy
+---
 
-In this repository, a **knot** is a mechanism-level local entanglement or break in reasoning state.
-
-Typical examples include:
-
-- explicit contradiction
-- incompatible redefinition
-- leaked case frame
-- unresolved repair
-- lost execution state
-- patchy backtracking
-- branch, loop, or index-state inconsistency
-
-The important claim is not merely that knots occur, but that **their semantics depend on domain**.
-
-### Working interpretation
-
-- **Math**: a knot can be explicit, local, and still compatible with successful recovery. Annotators agree reliably.
-- **Coding**: a similar-looking correction can mask a deeper execution-state failure. The original annotation protocol is invalid (κ = 0.0). A replacement execution-break protocol improves agreement (κ = 0.329) but remains below the threshold for strong claims.
-- **Takeaway**: the same textual behavior can correspond to different underlying mechanisms, and different annotation protocols are needed in each domain.
-
-### Methodological stance
-
-This repository takes a deliberately conservative stance on interpretation:
-
-- it separates **full-scale quantitative signal** from **pilot mechanism evidence**
-- it treats annotation-derived knot labels as mechanism probes rather than universal ground truth
-- it emphasizes **domain-conditioned interpretation** over universal verifier narratives
-- it treats RL warning results primarily as evidence of **operating-point failure under regime shift**
-- it explicitly reports annotation validity (κ) as a first-class result, not a footnote
-
-## Annotation validity
-
-**This is a critical disclosure.**
-
-The knot annotation results are reported with their inter-annotator agreement statistics:
-
-| Protocol | Domain | n | κ | Validity |
-|---|---|---|---|---|
-| GLM knot labels (original) | Math | 30 | 0.603 | Acceptable |
-| GLM knot labels (original) | Coding | 30 | 0.000 | **INVALID** — GLM marks 100% positive, humans 6.7% |
-| Execution-break protocol | Coding | 56 | 0.329 | Below threshold |
-
-The original coding annotation protocol is invalid and all results derived from it are not reported as primary findings. The execution-break protocol is the replacement, but its agreement (κ = 0.329) is still below the κ ≥ 0.6 threshold for strong claims. Coding knot mechanism results are therefore treated as pilot-scale evidence only.
-
-## Repository structure
+## Repository Structure
 
 ```
-cotknot/
+cot-signal/             ← (suggested rename from Cot-Knot)
 ├── paper/
-│   ├── paper_v8.tex          # manuscript source (v8, measurement framing)
-│   └── paper_v8.pdf          # compiled PDF
+│   ├── paper_v12.tex           # Current paper source (v12, multi-method)
+│   └── paper_v12.pdf           # Compiled PDF
 ├── figures/
-│   └── fig_knot_domain_profiles_v3.pdf   # main paper figure
+│   ├── fig_auroc_by_anchor_v12.pdf   # Fig 1: AUROC curves + AoA bar chart
+│   ├── fig_ssl_ceiling_v12.pdf       # Fig 2: SSL ceiling — coding vs science
+│   ├── fig_reranking_v12.pdf         # Fig 3: Best-of-N reranking pass@1
+│   ├── fig_deknot_alldomains_v12.pdf # Fig 4: De-knotting ablation (all 3 domains)
+│   └── fig_knot_domain_profiles_v3.pdf  # Legacy: feature gap in break-positive subsets
 ├── scripts/
-│   ├── run_glm_math_knot_labeling.py     # GLM annotation pipeline (math)
-│   ├── run_glm_math_knot_spans.py        # span extraction
-│   ├── verify_glm_math_knot_spans.py     # span verification
-│   ├── analyze_glm_math_knot.py          # knot label analysis
-│   ├── analyze_glm_math_knot_spans.py    # span-level analysis
-│   ├── compare_knot_domain_features.py   # cross-domain feature comparison → temporal profiles CSV
-│   └── plot_knot_domain_profiles.py      # figure generation (reads temporal profiles CSV)
+│   ├── gen_figures_v12.py            # Generate all 4 paper figures (requires local data paths)
+│   ├── deknot_alldomains_v2.py       # De-knotting experiment v2 (all domains, token masking)
+│   ├── deknot_coding_experiment.py   # De-knotting experiment v1 (coding only)
+│   ├── plot_knot_domain_profiles.py  # Legacy figure script
+│   ├── run_glm_*_knot_labeling*.py   # GLM knot annotation pipelines
+│   ├── analyze_glm_knot_v4.py        # Cross-domain knot analysis
+│   ├── compare_glm_knot_v4_domains.py
+│   └── build_glm_knot_error_enrichment_v4.py
+├── results/
+│   └── tables/                       # All CSV/MD result tables
+├── temp/                             # Old drafts, review notes (gitignored)
+├── .gitignore
+├── LICENSE
 └── README.md
 ```
 
-The figure pipeline is:
+---
 
+## Reproduce
+
+### Figures (requires local data paths)
+
+```bash
+cd workshop/cotknot
+python scripts/gen_figures_v12.py
+# Outputs: figures/fig_*_v12.pdf
 ```
-run_glm_math_knot_labeling.py
-        ↓
-compare_knot_domain_features.py  →  knot_cross_domain_temporal_profiles_pilot64.csv
-        ↓
-plot_knot_domain_profiles.py  →  fig_knot_domain_profiles_v3.pdf
+
+### De-knotting experiment (requires GLM API key + NAD cache)
+
+```bash
+# v2: all domains, proper token-level masking
+cd /path/to/NAD_Next && source .venv/bin/activate
+python /path/to/scripts/deknot_alldomains_v2.py
+# Results: results/tables/deknot_alldomains_v2.csv
 ```
 
-## Status
+### Compile paper
 
-This repository holds the paper-facing materials for a workshop submission (target: NeurIPS Math-AI / ICLR SCSL / EMNLP BlackboxNLP workshop tier).
+```bash
+cd paper
+pdflatex paper_v12.tex && pdflatex paper_v12.tex
+```
 
-The current version (v8) implements the measurement framing. The paper and main figure are committed. Scripts supporting the annotation and comparison pipeline are included under `scripts/`.
+---
 
-Known limitations (to be addressed in revision):
+## Paper Summary
 
-- Coding annotation validity is below threshold; stronger IAA required for main-venue claims.
-- No competitive baseline comparison (Math-Shepherd, ProcessBench) yet included.
-- RL warning section requires additional novelty framing.
+**Model:** DeepSeek-R1-0528-Qwen3-8B
+**Data:** AIME24/25 + BRUMO25 + HMMT25 (math), GPQA (science), LiveCodeBench-v5 (coding)
+**Features:** `tok_conf`, `tok_gini`, `tok_logprob`, `tok_neg_entropy`, `tok_selfcert` (per-token) +
+`traj_continuity`, `traj_novelty`, `traj_reflection_count` (trajectory)
+
+The central claim: these features measure "failure to converge" in math (where convergence has a
+closed-form answer) but measure "exploratory effort" in coding (where correctness requires execution).
+Same feature name, different underlying construct — a measurement non-invariance.
+
+---
 
 ## License
 
-This repository is released under the Apache 2.0 License. See `LICENSE`.
+Apache 2.0. See `LICENSE`.
 
 ## Citation
 
 ```bibtex
-@misc{chi2026cotknot,
-  title        = {CoT Quality Signals Are Domain-Conditioned: A Measurement Perspective on Different Knot Types in Math and Coding},
-  author       = {Yuhan Chi},
-  year         = {2026},
-  note         = {Workshop paper repository}
+@misc{chi2026cotsignal,
+  title   = {Code Correctness Is Not in the Text: Five Methods, One Ceiling ---
+             Convergent Evidence for {CoT} Quality Measurement Breakdown in Coding},
+  author  = {Yuhan Chi},
+  year    = {2026},
+  note    = {Workshop paper. Code: https://github.com/Chi-Shan0707/Cot-Knot}
 }
 ```
 
 ## Contact
 
-Yuhan Chi
-Fudan University
+Yuhan Chi · Fudan University · `masterwuguicyh@gmail.com`

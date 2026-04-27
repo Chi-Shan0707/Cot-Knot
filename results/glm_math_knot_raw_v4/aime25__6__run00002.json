@@ -1,0 +1,30 @@
+{
+  "domain": "math",
+  "dataset": "aime25",
+  "problem_id": "6",
+  "problem_key": "aime25:6",
+  "run_index": 2,
+  "is_correct": 0,
+  "source_report": "/home/jovyan/work/NAD_Next/MUI_HUB/cache/DeepSeek-R1-0528-Qwen3-8B/aime25/cache_neuron_output_1_act_no_rms_20251126_114548/evaluation_report.json",
+  "think_chars": 15618,
+  "think_total_chars": 98404,
+  "prompt_version": "v4",
+  "glm_raw_content": "{\n  \"knot_present\": \"yes\",\n  \"knot_severity\": 2,\n  \"knot_symptoms\": [\"assumption_drift\", \"repair_without_recovery\"],\n  \"primary_trigger\": \"assumption_tracking\",\n  \"knot_quote\": \"Now, the last word contains G, meaning that in the last word, which has the largest X, and it contains G, so either X or Y is G, but since X is the smaller one, and Y is the larger one, but G could be either.\",\n  \"trace_strategy\": \"symbolic_manipulation\",\n  \"reversal_count\": 1,\n  \"state_consistency\": \"recovered_break\",\n  \"recovers_later\": \"yes\",\n  \"open_diagnosis\": \"The model drifts from the assumption that G must be the smaller letter in the pair to the possibility that G could be either the smaller or larger letter, without immediately correcting this assumption.\",\n  \"annotator_confidence\": \"medium\"\n}",
+  "glm_parsed": {
+    "knot_present": "yes",
+    "knot_severity": 2,
+    "knot_symptoms": [
+      "assumption_drift",
+      "repair_without_recovery"
+    ],
+    "primary_trigger": "assumption_tracking",
+    "knot_quote": "Now, the last word contains G, meaning that in the last word, which has the largest X, and it contains G, so either X or Y is G, but since X is the smaller one, and Y is the larger one, but G could be either.",
+    "trace_strategy": "symbolic_manipulation",
+    "reversal_count": 1,
+    "state_consistency": "recovered_break",
+    "recovers_later": "yes",
+    "open_diagnosis": "The model drifts from the assumption that G must be the smaller letter in the pair to the possibility that G could be either the smaller or larger letter, without immediately correcting this assumption.",
+    "annotator_confidence": "medium"
+  },
+  "parse_error": null
+}

@@ -1,0 +1,31 @@
+{
+  "domain": "coding",
+  "dataset": "livecodebench_v5",
+  "problem_id": "livecodebench_v5-19",
+  "problem_key": "livecodebench_v5:livecodebench_v5-19",
+  "run_index": 49,
+  "is_correct": 1,
+  "source_report": "/home/jovyan/work/NAD_Next/MUI_HUB/cache/DeepSeek-R1-0528-Qwen3-8B/livecodebench_v5/cache_neuron_output_1_act_no_rms_20251127_032808/evaluation_report.json",
+  "think_chars": 15612,
+  "think_total_chars": 86345,
+  "prompt_version": "v4",
+  "glm_raw_content": "{\n  \"knot_present\": \"yes\",\n  \"knot_severity\": 2,\n  \"knot_symptoms\": [\"spec_state_drift\", \"variable_role_swap\", \"branch_entanglement\"],\n  \"primary_trigger\": \"spec_then_patch\",\n  \"knot_quote\": \"We have N toys and N boxes (N-1 existing + 1 new). We must assign each toy to a box. The constraint: the box's size must be >= the toy's size.\",\n  \"trace_strategy\": \"spec_then_patch\",\n  \"reversal_count\": 3,\n  \"state_consistency\": \"recovered_break\",\n  \"recovers_later\": \"yes\",\n  \"open_diagnosis\": \"The model's reasoning drifts between the overall problem statement and specific toy-box assignments, leading to confusion about the role of the new box and the constraints on toy sizes.\",\n  \"annotator_confidence\": \"medium\"\n}",
+  "glm_parsed": {
+    "knot_present": "yes",
+    "knot_severity": 2,
+    "knot_symptoms": [
+      "spec_state_drift",
+      "variable_role_swap",
+      "branch_entanglement"
+    ],
+    "primary_trigger": "spec_then_patch",
+    "knot_quote": "We have N toys and N boxes (N-1 existing + 1 new). We must assign each toy to a box. The constraint: the box's size must be >= the toy's size.",
+    "trace_strategy": "spec_then_patch",
+    "reversal_count": 3,
+    "state_consistency": "recovered_break",
+    "recovers_later": "yes",
+    "open_diagnosis": "The model's reasoning drifts between the overall problem statement and specific toy-box assignments, leading to confusion about the role of the new box and the constraints on toy sizes.",
+    "annotator_confidence": "medium"
+  },
+  "parse_error": null
+}

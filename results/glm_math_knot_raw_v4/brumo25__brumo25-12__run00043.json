@@ -1,0 +1,30 @@
+{
+  "domain": "math",
+  "dataset": "brumo25",
+  "problem_id": "brumo25-12",
+  "problem_key": "brumo25:brumo25-12",
+  "run_index": 43,
+  "is_correct": 0,
+  "source_report": "/home/jovyan/work/NAD_Next/MUI_HUB/cache/DeepSeek-R1-0528-Qwen3-8B/brumo25/cache_neuron_output_1_act_no_rms_20251126_071142/evaluation_report.json",
+  "think_chars": 15618,
+  "think_total_chars": 66327,
+  "prompt_version": "v4",
+  "glm_raw_content": "{\n  \"knot_present\": \"yes\",\n  \"knot_severity\": 2,\n  \"knot_symptoms\": [\"variable_binding_drift\", \"repair_without_recovery\"],\n  \"primary_trigger\": \"symbol_binding\",\n  \"knot_quote\": \"Now, the common chord ℓ is y - √3/6 = -√3 (x - 0.5), which is a line with slope -√3.\",\n  \"trace_strategy\": \"symbolic_manipulation\",\n  \"reversal_count\": 1,\n  \"state_consistency\": \"recovered_break\",\n  \"recovers_later\": \"yes\",\n  \"open_diagnosis\": \"The model incorrectly assumes that the common chord ℓ has a constant slope of -√3 for all values of d, which is not the case. This leads to a variable binding drift as the slope of ℓ depends on d. The model later corrects this assumption but does not immediately recover the previous state, leading to a repair without recovery.\",\n  \"annotator_confidence\": \"medium\"\n}",
+  "glm_parsed": {
+    "knot_present": "yes",
+    "knot_severity": 2,
+    "knot_symptoms": [
+      "variable_binding_drift",
+      "repair_without_recovery"
+    ],
+    "primary_trigger": "symbol_binding",
+    "knot_quote": "Now, the common chord ℓ is y - √3/6 = -√3 (x - 0.5), which is a line with slope -√3.",
+    "trace_strategy": "symbolic_manipulation",
+    "reversal_count": 1,
+    "state_consistency": "recovered_break",
+    "recovers_later": "yes",
+    "open_diagnosis": "The model incorrectly assumes that the common chord ℓ has a constant slope of -√3 for all values of d, which is not the case. This leads to a variable binding drift as the slope of ℓ depends on d. The model later corrects this assumption but does not immediately recover the previous state, leading to a repair without recovery.",
+    "annotator_confidence": "medium"
+  },
+  "parse_error": null
+}

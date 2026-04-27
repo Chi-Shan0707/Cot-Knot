@@ -1,0 +1,30 @@
+{
+  "domain": "math",
+  "dataset": "aime25",
+  "problem_id": "21",
+  "problem_key": "aime25:21",
+  "run_index": 6,
+  "is_correct": 0,
+  "source_report": "/home/jovyan/work/NAD_Next/MUI_HUB/cache/DeepSeek-R1-0528-Qwen3-8B/aime25/cache_neuron_output_1_act_no_rms_20251126_114548/evaluation_report.json",
+  "think_chars": 15618,
+  "think_total_chars": 51642,
+  "prompt_version": "v4",
+  "glm_raw_content": "{\n  \"knot_present\": \"yes\",\n  \"knot_severity\": 2,\n  \"knot_symptoms\": [\"assumption_drift\", \"repair_without_recovery\"],\n  \"primary_trigger\": \"assumption_tracking\",\n  \"knot_quote\": \"But in our calculation, we have counted all subsets that contain at least one from X and at least one from Y, but is this necessary and sufficient?\",\n  \"trace_strategy\": \"symbolic_manipulation\",\n  \"reversal_count\": 1,\n  \"state_consistency\": \"recovered_break\",\n  \"recovers_later\": \"yes\",\n  \"open_diagnosis\": \"The model questions the sufficiency of its initial assumption about the subsets, indicating a drift in the active assumption. This is followed by a repair attempt that does not fully restore the previous state, leading to a moderate break in the reasoning.\",\n  \"annotator_confidence\": \"medium\"\n}",
+  "glm_parsed": {
+    "knot_present": "yes",
+    "knot_severity": 2,
+    "knot_symptoms": [
+      "assumption_drift",
+      "repair_without_recovery"
+    ],
+    "primary_trigger": "assumption_tracking",
+    "knot_quote": "But in our calculation, we have counted all subsets that contain at least one from X and at least one from Y, but is this necessary and sufficient?",
+    "trace_strategy": "symbolic_manipulation",
+    "reversal_count": 1,
+    "state_consistency": "recovered_break",
+    "recovers_later": "yes",
+    "open_diagnosis": "The model questions the sufficiency of its initial assumption about the subsets, indicating a drift in the active assumption. This is followed by a repair attempt that does not fully restore the previous state, leading to a moderate break in the reasoning.",
+    "annotator_confidence": "medium"
+  },
+  "parse_error": null
+}

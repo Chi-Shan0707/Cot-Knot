@@ -1,0 +1,29 @@
+{
+  "domain": "math",
+  "dataset": "aime24",
+  "problem_id": "78",
+  "problem_key": "aime24:78",
+  "run_index": 56,
+  "is_correct": 0,
+  "source_report": "/home/jovyan/work/NAD_Next/MUI_HUB/cache/DeepSeek-R1-0528-Qwen3-8B/aime24/cache_neuron_output_1_act_no_rms_20250902_025610/evaluation_report.json",
+  "think_chars": 15619,
+  "think_total_chars": 63495,
+  "prompt_version": "v4",
+  "glm_raw_content": "{\n  \"knot_present\": \"yes\",\n  \"knot_severity\": 2,\n  \"knot_symptoms\": [\"variable_binding_drift\"],\n  \"primary_trigger\": \"symbol_binding\",\n  \"knot_quote\": \"So, the problem says that there is a unique such point C on AB (other than A and B) that is not on any segment from F except AB itself.\",\n  \"trace_strategy\": \"symbolic_manipulation\",\n  \"reversal_count\": 0,\n  \"state_consistency\": \"lost_state\",\n  \"recovers_later\": \"no\",\n  \"open_diagnosis\": \"The model loses track of the definition of point C and its role in the problem, leading to an unstable state.\",\n  \"annotator_confidence\": \"medium\"\n}",
+  "glm_parsed": {
+    "knot_present": "yes",
+    "knot_severity": 2,
+    "knot_symptoms": [
+      "variable_binding_drift"
+    ],
+    "primary_trigger": "symbol_binding",
+    "knot_quote": "So, the problem says that there is a unique such point C on AB (other than A and B) that is not on any segment from F except AB itself.",
+    "trace_strategy": "symbolic_manipulation",
+    "reversal_count": 0,
+    "state_consistency": "lost_state",
+    "recovers_later": "no",
+    "open_diagnosis": "The model loses track of the definition of point C and its role in the problem, leading to an unstable state.",
+    "annotator_confidence": "medium"
+  },
+  "parse_error": null
+}

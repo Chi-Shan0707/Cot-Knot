@@ -1,0 +1,2 @@
+domain,total_runs,n_unique_problems,parse_ok_rate,n_correct,n_incorrect,pct_correct,n_knot_present,knot_prevalence,knot_rate_correct,knot_rate_incorrect,mean_knot_severity,mean_reversal_count,spearman_rho_knot_vs_correct,spearman_pval_knot_vs_correct,spearman_rho_severity_vs_correct,spearman_pval_severity_vs_correct,degenerate_flag
+math,256,64,0.9609375,130,116,0.5284552845528455,137,0.556910569105691,0.3769230769230769,0.7586206896551724,1.1056910569105691,0.5975609756097561,-0.38357172173216697,4.809877605540367e-10,-0.38232921912487006,5.527888401185483e-10,0

@@ -1,0 +1,31 @@
+{
+  "domain": "coding",
+  "dataset": "livecodebench_v5",
+  "problem_id": "livecodebench_v5-135",
+  "problem_key": "livecodebench_v5:livecodebench_v5-135",
+  "run_index": 54,
+  "is_correct": 1,
+  "source_report": "/home/jovyan/work/NAD_Next/MUI_HUB/cache/DeepSeek-R1-0528-Qwen3-8B/livecodebench_v5/cache_neuron_output_1_act_no_rms_20251127_032808/evaluation_report.json",
+  "think_chars": 15619,
+  "think_total_chars": 80173,
+  "prompt_version": "v4",
+  "glm_raw_content": "{\n  \"knot_present\": \"yes\",\n  \"knot_severity\": 2,\n  \"knot_symptoms\": [\"spec_state_drift\", \"variable_role_swap\", \"branch_entanglement\"],\n  \"primary_trigger\": \"repair_loop\",\n  \"knot_quote\": \"This is not matching. I think a better approach is to use a two-pointer and a multiset for the queries that end between the current index and the next index.\",\n  \"trace_strategy\": \"patchy_backtracking\",\n  \"reversal_count\": 3,\n  \"state_consistency\": \"recovered_break\",\n  \"recovers_later\": \"yes\",\n  \"open_diagnosis\": \"The model's reasoning shows a shift in the active algorithmic interpretation, with multiple attempts to correct the approach without stabilizing on a single plan. This leads to a moderate break in the active coding state.\",\n  \"annotator_confidence\": \"medium\"\n}",
+  "glm_parsed": {
+    "knot_present": "yes",
+    "knot_severity": 2,
+    "knot_symptoms": [
+      "spec_state_drift",
+      "variable_role_swap",
+      "branch_entanglement"
+    ],
+    "primary_trigger": "repair_loop",
+    "knot_quote": "This is not matching. I think a better approach is to use a two-pointer and a multiset for the queries that end between the current index and the next index.",
+    "trace_strategy": "patchy_backtracking",
+    "reversal_count": 3,
+    "state_consistency": "recovered_break",
+    "recovers_later": "yes",
+    "open_diagnosis": "The model's reasoning shows a shift in the active algorithmic interpretation, with multiple attempts to correct the approach without stabilizing on a single plan. This leads to a moderate break in the active coding state.",
+    "annotator_confidence": "medium"
+  },
+  "parse_error": null
+}

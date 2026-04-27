@@ -1,0 +1,7 @@
+domain,symptom,n_present,prevalence,rate_correct,rate_incorrect,diff_incorrect_minus_correct,spearman_rho_vs_correct,spearman_pval_vs_correct
+science,entity_binding_drift,16,1.0,1.0,1.0,0.0,,
+science,mechanism_frame_swap,13,0.8125,0.75,0.875,0.125,-0.16012815380508713,0.5535832579206402
+science,constraint_mismatch,11,0.6875,0.5,0.875,0.375,-0.4045199174779453,0.12015383008820715
+science,repair_without_recovery,4,0.25,0.375,0.125,-0.25,0.2886751345948129,0.2782185458006808
+science,evidence_misread,2,0.125,0.125,0.125,0.0,0.0,1.0
+science,unit_scale_slip,0,0.0,0.0,0.0,0.0,,

@@ -1,0 +1,31 @@
+{
+  "domain": "science",
+  "dataset": "gpqa",
+  "problem_id": "gpqa-116",
+  "problem_key": "gpqa:gpqa-116",
+  "run_index": 20,
+  "is_correct": 1,
+  "source_report": "/home/jovyan/work/NAD_Next/MUI_HUB/cache/DeepSeek-R1-0528-Qwen3-8B/gpqa/cache_neuron_output_1_act_no_rms_20251126_111853/evaluation_report.json",
+  "think_chars": 15618,
+  "think_total_chars": 26658,
+  "prompt_version": "v4",
+  "glm_raw_content": "{\n  \"knot_present\": \"yes\",\n  \"knot_severity\": 2,\n  \"knot_symptoms\": [\"entity_binding_drift\", \"mechanism_frame_swap\", \"repair_without_recovery\"],\n  \"primary_trigger\": \"symbol_binding\",\n  \"knot_quote\": \"But look at the answer choices: none say only 2, but D is 2 and 3, which is wrong.\",\n  \"trace_strategy\": \"case_analysis\",\n  \"reversal_count\": 3,\n  \"state_consistency\": \"lost_state\",\n  \"recovers_later\": \"no\",\n  \"open_diagnosis\": \"The model becomes confused when comparing answer choices, leading to a loss of the active scientific state and a drift in entity binding and mechanism frames.\",\n  \"annotator_confidence\": \"medium\"\n}",
+  "glm_parsed": {
+    "knot_present": "yes",
+    "knot_severity": 2,
+    "knot_symptoms": [
+      "entity_binding_drift",
+      "mechanism_frame_swap",
+      "repair_without_recovery"
+    ],
+    "primary_trigger": "symbol_binding",
+    "knot_quote": "But look at the answer choices: none say only 2, but D is 2 and 3, which is wrong.",
+    "trace_strategy": "case_analysis",
+    "reversal_count": 3,
+    "state_consistency": "lost_state",
+    "recovers_later": "no",
+    "open_diagnosis": "The model becomes confused when comparing answer choices, leading to a loss of the active scientific state and a drift in entity binding and mechanism frames.",
+    "annotator_confidence": "medium"
+  },
+  "parse_error": null
+}

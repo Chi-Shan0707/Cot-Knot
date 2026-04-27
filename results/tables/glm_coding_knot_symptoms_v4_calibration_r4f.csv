@@ -1,0 +1,7 @@
+domain,symptom,n_present,prevalence,rate_correct,rate_incorrect,diff_incorrect_minus_correct,spearman_rho_vs_correct,spearman_pval_vs_correct
+coding,variable_role_swap,6,0.375,0.5,0.25,-0.25,0.25819888974716115,0.33428194339465755
+coding,branch_entanglement,6,0.375,0.5,0.25,-0.25,0.25819888974716115,0.33428194339465755
+coding,spec_state_drift,4,0.25,0.25,0.25,0.0,0.0,1.0
+coding,invariant_drop,2,0.125,0.25,0.0,-0.25,0.3779644730092273,0.14890387474453956
+coding,loop_state_forgetting,0,0.0,0.0,0.0,0.0,,
+coding,patch_backtracking,0,0.0,0.0,0.0,0.0,,

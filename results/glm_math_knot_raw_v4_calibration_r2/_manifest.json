@@ -1,0 +1,33 @@
+{
+  "mode": "sample",
+  "domain": "math",
+  "datasets": [
+    "aime24",
+    "aime25",
+    "brumo25",
+    "hmmt25"
+  ],
+  "protocol": "active_state_control_v4",
+  "selected_runs": 24,
+  "selected_problems": 6,
+  "dataset_problem_counts": {
+    "aime24": 2,
+    "aime25": 2,
+    "brumo25": 1,
+    "hmmt25": 1
+  },
+  "workers": 4,
+  "requests_per_second": 2.0,
+  "model": "glm-4-flash",
+  "think_max_chars": 16000,
+  "prompt_version": "v4",
+  "seed": 42,
+  "cpu_info": {
+    "logical_cpus": 240,
+    "loadavg_1m": 52.765,
+    "loadavg_5m": 106.444,
+    "loadavg_15m": 104.314,
+    "load_ratio_1m": 0.2199
+  },
+  "ts": "2026-04-27T05:49:13"
+}

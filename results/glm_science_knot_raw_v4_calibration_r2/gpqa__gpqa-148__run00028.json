@@ -1,0 +1,31 @@
+{
+  "domain": "science",
+  "dataset": "gpqa",
+  "problem_id": "gpqa-148",
+  "problem_key": "gpqa:gpqa-148",
+  "run_index": 28,
+  "is_correct": 1,
+  "source_report": "/home/jovyan/work/NAD_Next/MUI_HUB/cache/DeepSeek-R1-0528-Qwen3-8B/gpqa/cache_neuron_output_1_act_no_rms_20251126_111853/evaluation_report.json",
+  "think_chars": 10601,
+  "think_total_chars": 10601,
+  "prompt_version": "v4",
+  "glm_raw_content": "{\n  \"knot_present\": \"yes\",\n  \"knot_severity\": 2,\n  \"knot_symptoms\": [\"entity_binding_drift\", \"mechanism_frame_swap\", \"constraint_mismatch\"],\n  \"primary_trigger\": \"symbol_binding\",\n  \"knot_quote\": \"Enantiomers are also stereoisomers. But enantiomers don't show different NMR. Unless the molecule is prochiral or something, but.\",\n  \"trace_strategy\": \"mechanism_tracing\",\n  \"reversal_count\": 1,\n  \"state_consistency\": \"minor_slip\",\n  \"recovers_later\": \"yes\",\n  \"open_diagnosis\": \"The model incorrectly binds the concept of enantiomers to the NMR spectrum, suggesting that enantiomers do not show different NMR, which is a constraint mismatch. This is followed by a correction to the mechanism frame and constraint, but the initial instability remains in the reasoning.\",\n  \"annotator_confidence\": \"medium\"\n}",
+  "glm_parsed": {
+    "knot_present": "yes",
+    "knot_severity": 2,
+    "knot_symptoms": [
+      "entity_binding_drift",
+      "mechanism_frame_swap",
+      "constraint_mismatch"
+    ],
+    "primary_trigger": "symbol_binding",
+    "knot_quote": "Enantiomers are also stereoisomers. But enantiomers don't show different NMR. Unless the molecule is prochiral or something, but.",
+    "trace_strategy": "mechanism_tracing",
+    "reversal_count": 1,
+    "state_consistency": "minor_slip",
+    "recovers_later": "yes",
+    "open_diagnosis": "The model incorrectly binds the concept of enantiomers to the NMR spectrum, suggesting that enantiomers do not show different NMR, which is a constraint mismatch. This is followed by a correction to the mechanism frame and constraint, but the initial instability remains in the reasoning.",
+    "annotator_confidence": "medium"
+  },
+  "parse_error": null
+}

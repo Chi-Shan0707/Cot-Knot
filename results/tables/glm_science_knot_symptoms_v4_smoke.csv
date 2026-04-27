@@ -1,0 +1,7 @@
+domain,symptom,n_present,prevalence,rate_correct,rate_incorrect,diff_incorrect_minus_correct,spearman_rho_vs_correct,spearman_pval_vs_correct
+science,mechanism_frame_swap,1,1.0,1.0,,,,
+science,repair_without_recovery,1,1.0,1.0,,,,
+science,entity_binding_drift,0,0.0,0.0,,,,
+science,constraint_mismatch,0,0.0,0.0,,,,
+science,evidence_misread,0,0.0,0.0,,,,
+science,unit_scale_slip,0,0.0,0.0,,,,

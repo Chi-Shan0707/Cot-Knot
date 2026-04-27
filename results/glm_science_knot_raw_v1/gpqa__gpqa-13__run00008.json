@@ -1,0 +1,28 @@
+{
+  "dataset": "gpqa",
+  "problem_id": "gpqa-13",
+  "problem_key": "gpqa:gpqa-13",
+  "run_index": 8,
+  "is_correct": 0,
+  "source_report": "/home/jovyan/work/NAD_Next/MUI_HUB/cache/DeepSeek-R1-0528-Qwen3-8B/gpqa/cache_neuron_output_1_act_no_rms_20251126_111853/evaluation_report.json",
+  "think_chars": 12177,
+  "think_total_chars": 12177,
+  "prompt_version": "v1",
+  "glm_raw_content": "```json\n{\n  \"knot_present\": \"yes\",\n  \"knot_severity\": 2,\n  \"knot_symptoms\": [\"assumption_contradiction\", \"repair_without_recovery\", \"variable_identity_drift\"],\n  \"primary_trigger\": \"assumption_tracking\",\n  \"knot_quote\": \"DSG might be a typo or misremembering. Actually, DSG could be referring to Dithioxyacetone or something else, but I suspect it might be a mistake.\",\n  \"trace_strategy\": \"patchy_backtracking\",\n  \"reversal_count\": 3,\n  \"state_consistency\": \"lost_state\",\n  \"open_diagnosis\": \"The model's reasoning becomes unstable due to uncertainty about the correct identification of DSG, leading to a loss of the stable scientific state and multiple repairs without resolution.\"\n}\n```",
+  "glm_parsed": {
+    "knot_present": "yes",
+    "knot_severity": 2,
+    "knot_symptoms": [
+      "assumption_contradiction",
+      "repair_without_recovery",
+      "variable_identity_drift"
+    ],
+    "primary_trigger": "assumption_tracking",
+    "knot_quote": "DSG might be a typo or misremembering. Actually, DSG could be referring to Dithioxyacetone or something else, but I suspect it might be a mistake.",
+    "trace_strategy": "patchy_backtracking",
+    "reversal_count": 3,
+    "state_consistency": "lost_state",
+    "open_diagnosis": "The model's reasoning becomes unstable due to uncertainty about the correct identification of DSG, leading to a loss of the stable scientific state and multiple repairs without resolution."
+  },
+  "parse_error": null
+}

@@ -1,0 +1,30 @@
+{
+  "domain": "math",
+  "dataset": "aime25",
+  "problem_id": "22",
+  "problem_key": "aime25:22",
+  "run_index": 16,
+  "is_correct": 0,
+  "source_report": "/home/jovyan/work/NAD_Next/MUI_HUB/cache/DeepSeek-R1-0528-Qwen3-8B/aime25/cache_neuron_output_1_act_no_rms_20251126_114548/evaluation_report.json",
+  "think_chars": 15619,
+  "think_total_chars": 76483,
+  "prompt_version": "v4",
+  "glm_raw_content": "{\n  \"knot_present\": \"yes\",\n  \"knot_severity\": 2,\n  \"knot_symptoms\": [\"assumption_drift\", \"repair_without_recovery\"],\n  \"primary_trigger\": \"assumption_tracking\",\n  \"knot_quote\": \"But in this case, we need to find for which N the greedy solution is minimal.\",\n  \"trace_strategy\": \"symbolic_manipulation\",\n  \"reversal_count\": 1,\n  \"state_consistency\": \"recovered_break\",\n  \"recovers_later\": \"yes\",\n  \"open_diagnosis\": \"The model drifts from the assumption of finding the greedy solution for all N to a specific case without clarifying the change in scope.\",\n  \"annotator_confidence\": \"medium\"\n}",
+  "glm_parsed": {
+    "knot_present": "yes",
+    "knot_severity": 2,
+    "knot_symptoms": [
+      "assumption_drift",
+      "repair_without_recovery"
+    ],
+    "primary_trigger": "assumption_tracking",
+    "knot_quote": "But in this case, we need to find for which N the greedy solution is minimal.",
+    "trace_strategy": "symbolic_manipulation",
+    "reversal_count": 1,
+    "state_consistency": "recovered_break",
+    "recovers_later": "yes",
+    "open_diagnosis": "The model drifts from the assumption of finding the greedy solution for all N to a specific case without clarifying the change in scope.",
+    "annotator_confidence": "medium"
+  },
+  "parse_error": null
+}

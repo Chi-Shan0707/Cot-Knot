@@ -1,0 +1,30 @@
+{
+  "domain": "math",
+  "dataset": "aime25",
+  "problem_id": "21",
+  "problem_key": "aime25:21",
+  "run_index": 20,
+  "is_correct": 1,
+  "source_report": "/home/jovyan/work/NAD_Next/MUI_HUB/cache/DeepSeek-R1-0528-Qwen3-8B/aime25/cache_neuron_output_1_act_no_rms_20251126_114548/evaluation_report.json",
+  "think_chars": 15620,
+  "think_total_chars": 54121,
+  "prompt_version": "v4",
+  "glm_raw_content": "{\n  \"knot_present\": \"yes\",\n  \"knot_severity\": 2,\n  \"knot_symptoms\": [\"assumption_drift\", \"repair_without_recovery\"],\n  \"primary_trigger\": \"assumption_tracking\",\n  \"knot_quote\": \"the way it's written, it seems that B is selected from all subsets, and we find the probability that it is nonempty and satisfies the property.\",\n  \"trace_strategy\": \"symbolic_manipulation\",\n  \"reversal_count\": 1,\n  \"state_consistency\": \"recovered_break\",\n  \"recovers_later\": \"yes\",\n  \"open_diagnosis\": \"The model initially assumes that B is selected from all subsets, but later revises this assumption without a clear explanation, leading to confusion and a need for a subsequent correction.\",\n  \"annotator_confidence\": \"medium\"\n}",
+  "glm_parsed": {
+    "knot_present": "yes",
+    "knot_severity": 2,
+    "knot_symptoms": [
+      "assumption_drift",
+      "repair_without_recovery"
+    ],
+    "primary_trigger": "assumption_tracking",
+    "knot_quote": "the way it's written, it seems that B is selected from all subsets, and we find the probability that it is nonempty and satisfies the property.",
+    "trace_strategy": "symbolic_manipulation",
+    "reversal_count": 1,
+    "state_consistency": "recovered_break",
+    "recovers_later": "yes",
+    "open_diagnosis": "The model initially assumes that B is selected from all subsets, but later revises this assumption without a clear explanation, leading to confusion and a need for a subsequent correction.",
+    "annotator_confidence": "medium"
+  },
+  "parse_error": null
+}

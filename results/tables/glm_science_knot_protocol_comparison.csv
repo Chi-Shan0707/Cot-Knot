@@ -1,0 +1,3 @@
+protocol,total_runs,n_positive,prevalence,pos_in_correct,pos_in_incorrect,spearman_rho,spearman_pval,mean_severity,degenerate
+v1_exploratory,118,118,1.0,1.0,1.0,,,2.0169,True
+v2_replacement,120,11,0.0917,0.1406,0.0357,0.1814,0.0474,0.25,False

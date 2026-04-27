@@ -1,0 +1,20 @@
+{
+  "mode": "sample",
+  "dataset": "gpqa",
+  "selected_runs": 120,
+  "selected_problems": 30,
+  "workers": 4,
+  "requests_per_second": 3.0,
+  "model": "glm-4-flash",
+  "think_max_chars": 16000,
+  "prompt_version": "v1",
+  "seed": 42,
+  "cpu_info": {
+    "logical_cpus": 240,
+    "loadavg_1m": 48.22,
+    "loadavg_5m": 53.594,
+    "loadavg_15m": 57.643,
+    "load_ratio_1m": 0.2009
+  },
+  "ts": "2026-04-27T04:21:07"
+}

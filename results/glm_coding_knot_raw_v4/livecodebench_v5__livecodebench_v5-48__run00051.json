@@ -1,0 +1,29 @@
+{
+  "domain": "coding",
+  "dataset": "livecodebench_v5",
+  "problem_id": "livecodebench_v5-48",
+  "problem_key": "livecodebench_v5:livecodebench_v5-48",
+  "run_index": 51,
+  "is_correct": 0,
+  "source_report": "/home/jovyan/work/NAD_Next/MUI_HUB/cache/DeepSeek-R1-0528-Qwen3-8B/livecodebench_v5/cache_neuron_output_1_act_no_rms_20251127_032808/evaluation_report.json",
+  "think_chars": 13842,
+  "think_total_chars": 13842,
+  "prompt_version": "v4",
+  "glm_raw_content": "{\n  \"knot_present\": \"no\",\n  \"knot_severity\": 0,\n  \"knot_symptoms\": [\"none\"],\n  \"primary_trigger\": \"spec_then_patch\",\n  \"knot_quote\": \"\",\n  \"trace_strategy\": \"spec_then_patch\",\n  \"reversal_count\": 0,\n  \"state_consistency\": \"stable\",\n  \"recovers_later\": \"yes\",\n  \"open_diagnosis\": \"The reasoning provided is consistent and follows a logical progression without any breaks in the active state control.\",\n  \"annotator_confidence\": \"high\"\n}",
+  "glm_parsed": {
+    "knot_present": "no",
+    "knot_severity": 0,
+    "knot_symptoms": [
+      "none"
+    ],
+    "primary_trigger": "spec_then_patch",
+    "knot_quote": "",
+    "trace_strategy": "spec_then_patch",
+    "reversal_count": 0,
+    "state_consistency": "stable",
+    "recovers_later": "yes",
+    "open_diagnosis": "The reasoning provided is consistent and follows a logical progression without any breaks in the active state control.",
+    "annotator_confidence": "high"
+  },
+  "parse_error": null
+}

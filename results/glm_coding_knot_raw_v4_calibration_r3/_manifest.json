@@ -1,0 +1,24 @@
+{
+  "mode": "sample",
+  "domain": "coding",
+  "datasets": [
+    "livecodebench_v5"
+  ],
+  "protocol": "active_state_control_v4",
+  "selected_runs": 24,
+  "selected_problems": 6,
+  "workers": 4,
+  "requests_per_second": 2.0,
+  "model": "glm-4-flash",
+  "think_max_chars": 16000,
+  "prompt_version": "v4",
+  "seed": 42,
+  "cpu_info": {
+    "logical_cpus": 240,
+    "loadavg_1m": 53.788,
+    "loadavg_5m": 83.006,
+    "loadavg_15m": 95.592,
+    "load_ratio_1m": 0.2241
+  },
+  "ts": "2026-04-27T05:52:15"
+}

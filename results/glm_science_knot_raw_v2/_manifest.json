@@ -1,0 +1,14 @@
+{
+  "mode": "sample",
+  "dataset": "gpqa",
+  "protocol": "v2_replacement",
+  "selected_runs": 120,
+  "selected_problems": 30,
+  "workers": 4,
+  "requests_per_second": 3.0,
+  "model": "glm-4-flash",
+  "think_max_chars": 16000,
+  "prompt_version": "v2",
+  "seed": 42,
+  "ts": "2026-04-27T04:35:05"
+}

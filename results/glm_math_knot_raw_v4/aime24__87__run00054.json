@@ -1,0 +1,30 @@
+{
+  "domain": "math",
+  "dataset": "aime24",
+  "problem_id": "87",
+  "problem_key": "aime24:87",
+  "run_index": 54,
+  "is_correct": 0,
+  "source_report": "/home/jovyan/work/NAD_Next/MUI_HUB/cache/DeepSeek-R1-0528-Qwen3-8B/aime24/cache_neuron_output_1_act_no_rms_20250902_025610/evaluation_report.json",
+  "think_chars": 15618,
+  "think_total_chars": 77285,
+  "prompt_version": "v4",
+  "glm_raw_content": "{\n  \"knot_present\": \"yes\",\n  \"knot_severity\": 2,\n  \"knot_symptoms\": [\"assumption_drift\", \"repair_without_recovery\"],\n  \"primary_trigger\": \"assumption_tracking\",\n  \"knot_quote\": \"Therefore, there must be an error in the assumption that A, B, D can be chosen freely based on C. Wait, but how?\",\n  \"trace_strategy\": \"symbolic_manipulation\",\n  \"reversal_count\": 1,\n  \"state_consistency\": \"recovered_break\",\n  \"recovers_later\": \"yes\",\n  \"open_diagnosis\": \"The model drifted from the assumption that A, B, D can be chosen freely based on C, leading to a series of repairs without recovery. This caused an instability in the active assumption.\",\n  \"annotator_confidence\": \"medium\"\n}",
+  "glm_parsed": {
+    "knot_present": "yes",
+    "knot_severity": 2,
+    "knot_symptoms": [
+      "assumption_drift",
+      "repair_without_recovery"
+    ],
+    "primary_trigger": "assumption_tracking",
+    "knot_quote": "Therefore, there must be an error in the assumption that A, B, D can be chosen freely based on C. Wait, but how?",
+    "trace_strategy": "symbolic_manipulation",
+    "reversal_count": 1,
+    "state_consistency": "recovered_break",
+    "recovers_later": "yes",
+    "open_diagnosis": "The model drifted from the assumption that A, B, D can be chosen freely based on C, leading to a series of repairs without recovery. This caused an instability in the active assumption.",
+    "annotator_confidence": "medium"
+  },
+  "parse_error": null
+}

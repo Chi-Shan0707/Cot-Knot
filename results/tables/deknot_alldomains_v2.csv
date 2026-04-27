@@ -1,0 +1,4 @@
+domain,n_runs,n_knotted,knot_rate_correct,knot_rate_incorrect,total_chars_removed,auroc_original,auroc_deknot,delta,verdict
+math,200,155,0.73,0.82,153270,0.5018,0.4528,-0.0489,HURTS
+science,200,113,0.6,0.53,173523,0.5269,0.5214,-0.0055,NEUTRAL (no change)
+coding,200,183,0.93,0.9,138273,0.4602,0.4658,0.0056,NEUTRAL (no change)

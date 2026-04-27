@@ -1,0 +1,30 @@
+{
+  "domain": "math",
+  "dataset": "aime25",
+  "problem_id": "19",
+  "problem_key": "aime25:19",
+  "run_index": 54,
+  "is_correct": 1,
+  "source_report": "/home/jovyan/work/NAD_Next/MUI_HUB/cache/DeepSeek-R1-0528-Qwen3-8B/aime25/cache_neuron_output_1_act_no_rms_20251126_114548/evaluation_report.json",
+  "think_chars": 15618,
+  "think_total_chars": 80327,
+  "prompt_version": "v4",
+  "glm_raw_content": "{\n  \"knot_present\": \"yes\",\n  \"knot_severity\": 2,\n  \"knot_symptoms\": [\"variable_binding_drift\", \"repair_without_recovery\"],\n  \"primary_trigger\": \"symbol_binding\",\n  \"knot_quote\": \"BD is the line from B to D, D is midpoint of BC. So BD is a median? No, BD is from B to midpoint of BC, but in triangle ABC, from vertex B, the median would be to the midpoint of AC, which is E.\",\n  \"trace_strategy\": \"case_analysis\",\n  \"reversal_count\": 1,\n  \"state_consistency\": \"recovered_break\",\n  \"recovers_later\": \"yes\",\n  \"open_diagnosis\": \"The model incorrectly identifies BD as a median based on its position relative to BC, but later corrects this by clarifying that BD is not a median from B, but rather from B to the midpoint of BC.\",\n  \"annotator_confidence\": \"medium\"\n}",
+  "glm_parsed": {
+    "knot_present": "yes",
+    "knot_severity": 2,
+    "knot_symptoms": [
+      "variable_binding_drift",
+      "repair_without_recovery"
+    ],
+    "primary_trigger": "symbol_binding",
+    "knot_quote": "BD is the line from B to D, D is midpoint of BC. So BD is a median? No, BD is from B to midpoint of BC, but in triangle ABC, from vertex B, the median would be to the midpoint of AC, which is E.",
+    "trace_strategy": "case_analysis",
+    "reversal_count": 1,
+    "state_consistency": "recovered_break",
+    "recovers_later": "yes",
+    "open_diagnosis": "The model incorrectly identifies BD as a median based on its position relative to BC, but later corrects this by clarifying that BD is not a median from B, but rather from B to the midpoint of BC.",
+    "annotator_confidence": "medium"
+  },
+  "parse_error": null
+}

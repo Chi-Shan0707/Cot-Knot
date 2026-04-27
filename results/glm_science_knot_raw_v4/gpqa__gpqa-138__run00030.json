@@ -1,0 +1,30 @@
+{
+  "domain": "science",
+  "dataset": "gpqa",
+  "problem_id": "gpqa-138",
+  "problem_key": "gpqa:gpqa-138",
+  "run_index": 30,
+  "is_correct": 0,
+  "source_report": "/home/jovyan/work/NAD_Next/MUI_HUB/cache/DeepSeek-R1-0528-Qwen3-8B/gpqa/cache_neuron_output_1_act_no_rms_20251126_111853/evaluation_report.json",
+  "think_chars": 15621,
+  "think_total_chars": 24238,
+  "prompt_version": "v4",
+  "glm_raw_content": "{\n  \"knot_present\": \"yes\",\n  \"knot_severity\": 2,\n  \"knot_symptoms\": [\"mechanism_frame_swap\", \"repair_without_recovery\"],\n  \"primary_trigger\": \"mechanism_frame_swap\",\n  \"knot_quote\": \"NaNO2 with HCl is for diazotization, but again, for amines.\",\n  \"trace_strategy\": \"mechanism_tracing\",\n  \"reversal_count\": 3,\n  \"state_consistency\": \"recovered_break\",\n  \"recovers_later\": \"yes\",\n  \"open_diagnosis\": \"The model initially commits to the mechanism of diazotization with NaNO2 and HCl, but later revisits this mechanism and acknowledges it is typically for amines, suggesting a potential inconsistency in the active mechanism frame.\",\n  \"annotator_confidence\": \"medium\"\n}",
+  "glm_parsed": {
+    "knot_present": "yes",
+    "knot_severity": 2,
+    "knot_symptoms": [
+      "mechanism_frame_swap",
+      "repair_without_recovery"
+    ],
+    "primary_trigger": "mechanism_frame_swap",
+    "knot_quote": "NaNO2 with HCl is for diazotization, but again, for amines.",
+    "trace_strategy": "mechanism_tracing",
+    "reversal_count": 3,
+    "state_consistency": "recovered_break",
+    "recovers_later": "yes",
+    "open_diagnosis": "The model initially commits to the mechanism of diazotization with NaNO2 and HCl, but later revisits this mechanism and acknowledges it is typically for amines, suggesting a potential inconsistency in the active mechanism frame.",
+    "annotator_confidence": "medium"
+  },
+  "parse_error": null
+}

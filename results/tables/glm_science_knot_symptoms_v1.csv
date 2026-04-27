@@ -1,0 +1,7 @@
+symptom,n_present,prevalence,spearman_rho_vs_correct,spearman_pval_vs_correct
+concept_conflation,17,0.1441,-0.0451,0.62808
+formula_scope_violation,0,0.0,,
+variable_identity_drift,75,0.6356,-0.0143,0.877475
+assumption_contradiction,118,1.0,,
+causal_chain_break,14,0.1186,0.0863,0.352867
+repair_without_recovery,102,0.8644,0.0202,0.828415

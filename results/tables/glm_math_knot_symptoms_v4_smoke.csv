@@ -1,0 +1,7 @@
+domain,symptom,n_present,prevalence,rate_correct,rate_incorrect,diff_incorrect_minus_correct,spearman_rho_vs_correct,spearman_pval_vs_correct
+math,assumption_drift,1,1.0,1.0,,,,
+math,repair_without_recovery,1,1.0,1.0,,,,
+math,case_split_instability,0,0.0,0.0,,,,
+math,subgoal_frame_loss,0,0.0,0.0,,,,
+math,variable_binding_drift,0,0.0,0.0,,,,
+math,invariant_drift,0,0.0,0.0,,,,
