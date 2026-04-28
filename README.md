@@ -1,6 +1,6 @@
 <div align="center">
 
-# cot-signal
+# code-not-text
 
 ### Code Correctness Is Not in the Text:<br>Five Methods, One Ceiling — Convergent Evidence for CoT Quality Measurement Breakdown in Coding
 
@@ -10,11 +10,6 @@
   <img src="https://img.shields.io/badge/domains-math%20%7C%20science%20%7C%20coding-0a7e5a" alt="domains" />
   <img src="https://img.shields.io/badge/license-Apache--2.0-orange" alt="license" />
 </p>
-
-> **Suggested new name for this repository:** `cot-signal`
-> *(The current name `Cot-Knot` was coined early in the project around the knot-annotation framing.
-> The paper has grown into a broader measurement study of whether CoT traces carry quality signals at all —
-> `cot-signal` is shorter, more general, and maps directly to the central question.)*
 
 *Within this feature family, code correctness is not in the text.*
 
@@ -101,7 +96,7 @@ Key SSL v2 numbers at anchor=100%:
 ## Repository Structure
 
 ```
-cot-signal/             ← (suggested rename from Cot-Knot)
+code-not-text/
 ├── paper/
 │   ├── paper_v12.tex           # Current paper source (v12, multi-method)
 │   └── paper_v12.pdf           # Compiled PDF
@@ -178,12 +173,12 @@ Apache 2.0. See `LICENSE`.
 ## Citation
 
 ```bibtex
-@misc{chi2026cotsignal,
+@misc{chi2026codenottext,
   title   = {Code Correctness Is Not in the Text: Five Methods, One Ceiling ---
              Convergent Evidence for {CoT} Quality Measurement Breakdown in Coding},
   author  = {Yuhan Chi},
   year    = {2026},
-  note    = {Workshop paper. Code: https://github.com/Chi-Shan0707/Cot-Knot}
+  note    = {Workshop paper. Code: https://github.com/Chi-Shan0707/code-not-text}
 }
 ```
 
