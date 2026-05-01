@@ -1,0 +1,375 @@
+\documentclass[10pt,twocolumn]{article}
+\usepackage[margin=0.75in,top=0.85in,bottom=0.85in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs,tabularx,array,multirow}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{hyperref}
+\usepackage{url}
+\hypersetup{colorlinks=true,linkcolor=blue!50!black,citecolor=blue!50!black,urlcolor=blue!50!black}
+\setlength{\parindent}{0.9em}
+\setlength{\parskip}{0.2em}
+\renewcommand{\arraystretch}{1.1}
+\newcolumntype{C}{>{\centering\arraybackslash}p{1.6cm}}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\graphicspath{{../figures/}{./}}
+
+\title{\textbf{Cross-Domain Limits of Hand-Crafted CoT-Surface Features:\\[4pt]
+\large Strong in Math, Narrow in Science, Weak in Coding}}
+\author{Yuhan Chi\\Fudan University\\\texttt{yhchi25@m.fudan.edu.cn}}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Can cheap summaries of chain-of-thought (CoT) traces predict whether a solution is correct? We test a single feature family---hand-crafted CoT-surface and token-trajectory features---on \textbf{DeepSeek-R1-0528-Qwen3-8B} across three domains: math, science, and coding.
+
+It depends on the domain. In math, the signal is strong: the main probe reaches AUC-of-AUROC (AoA) 0.958 and AUROC@100\% 0.982, dense-anchor curves plateau early, and best-of-$N=64$ reranking gains $+10.0$ percentage points. Science is weaker and narrower: the full probe reaches AoA 0.799 and AUROC@100\% 0.841, but it does not beat a one-dimensional token-confidence baseline (0.809 / 0.856), and permutation importance is concentrated on confidence-heavy features.
+
+Coding is different. On LiveCodeBench-v5, the main probe falls to AoA 0.434 and AUROC@100\% 0.407. A sweep of 83 coding scalars peaks at AUROC 0.556. Grouped family ablations stay near chance. A deliberately coding-specific CoT-only run judge over 19 surface features yields 5-fold GroupKFold out-of-fold AUC $0.481 \pm 0.053$ and no best-of-$64$ lift ($-0.006$). Nonlinear heads and self-supervised pre-training do not materially improve the full-label ceiling, and token-level de-knotting is neutral.
+
+Our claim is therefore narrower than earlier drafts: in this single-model study, cheap hand-crafted CoT-surface features transfer well to math, only partly to science, and poorly to coding correctness on unseen problems. This does \emph{not} rule out raw-text, code-aware, execution-aware, or hidden-state verifiers. It identifies a specific feature family whose semantics do not carry over cleanly to code verification.
+\end{abstract}
+
+\section{Introduction}
+
+Process supervision and verifier-based reranking often rely on a practical assumption: that answer quality leaves a readable footprint in the generated chain of thought. In math, that assumption is often justified. In coding, it is much less clear.
+
+We focus on a narrow question. We do not ask whether \emph{all} text-based verifiers fail on coding. We ask whether a cheap, interpretable family of CoT-surface features transfers across domains. The family includes token-confidence summaries, simple trajectory statistics, and lightweight activation-derived summaries. These features are simple to store and evaluate at test time.
+
+The results differ across domains. Math shows a strong and early signal. Science shows a usable but narrower signal that is largely confidence-driven. Coding does not: across the main probe, a broader scalar sweep, grouped family ablations, a coding-specific CoT-only run judge, nonlinear heads, self-supervised pre-training, and token-level de-knotting, performance stays weak on unseen problems.
+
+Our contribution is empirical:
+\begin{itemize}
+    \item it shows where this feature family works best (math),
+    \item it shows an intermediate case where the signal exists but is narrower than it first appears (science),
+    \item and it documents a coding domain where the same measurement strategy does not carry over.
+\end{itemize}
+
+This is useful as a narrowly scoped result. If this cheap verifier fails, it may be because these features do not track correctness in that domain.
+
+\section{Related Work}
+
+\paragraph{Process supervision and verifiers.}
+Outcome verifiers and process reward models established that reasoning traces can be useful supervision signals \citep{cobbe2021training,lightman2023verify,wang2024mathshepherd}. ProcessBench evaluates step-level error detection in mathematical reasoning \citep{zheng2025processbench}, and generative verifier formulations cast reward modeling as next-token prediction \citep{zhang2025genrm}. Our paper asks a different question: before training a sophisticated verifier, what can be recovered from a very cheap feature family?
+
+\paragraph{CoT faithfulness and self-correction.}
+CoT traces are not always faithful explanations of model reasoning \citep{lanham2023faithfulness}. Related work on self-correction shows that reflective text does not reliably translate into better reasoning on its own \citep{huang2024selfcorrect,liu2024intrinsic,madaan2023selfrefine,shinn2023reflexion}. We add a cross-domain angle: even when self-corrective language is visible, the \emph{measurability} of correctness from that language depends on the task.
+
+\paragraph{Code selection and execution-aware verification.}
+Code-generation systems often rely on information channels stronger than CoT surface form. CodeT, for example, selects candidates by executing them against generated tests and comparing execution agreement \citep{chen2022codet}. Our setting is intentionally weaker: no execution feedback, no hidden-state probes, and no external API judge. The question is whether cheap hand-crafted CoT-surface features are already enough.
+
+\paragraph{Measurement invariance.}
+The psychometric literature on measurement invariance asks whether the same instrument measures the same latent construct across groups \citep{vandenberg2000review}. Probing work in NLP makes a related point: a probe can be informative without being semantically stable across settings \citep{belinkov2022probing}. We use that lens here. The same feature name can measure ``failure to converge'' in math and something much less useful in coding.
+
+\section{Setup}
+\label{sec:setup}
+
+\subsection{Model, domains, and data}
+
+All traces are generated by \textbf{DeepSeek-R1-0528-Qwen3-8B} at temperature 1.0.
+\textbf{Math:} 7,680 aligned runs across AIME24, AIME25, BRUMO25, and HMMT25.
+\textbf{Science:} 12,672 runs from GPQA.
+\textbf{Coding:} 10,688 runs from LiveCodeBench-v5.
+
+\subsection{Feature family}
+
+The main probe uses five hand-crafted features computed from cached token streams and sparse activations.
+
+\textit{Token-level summaries.}
+\texttt{tok\_conf} is the mean negative log probability over visible prefix tokens. Four additional per-token arrays are available for auxiliary checks: \texttt{tok\_gini}, \texttt{tok\_logprob}, \texttt{tok\_neg\_entropy}, and \texttt{tok\_selfcert}.
+
+\textit{Trajectory statistics.}
+\texttt{traj\_continuity} is the mean Jaccard similarity between consecutive activation slices.
+\texttt{traj\_novelty} is the mean $1 - \max_j \text{Jaccard}(s_i, s_j)$ over prior slices.
+\texttt{traj\_reflection\_count} is the negated count of non-adjacent slice revisits above a fixed overlap threshold.
+
+\textit{Neuron summary.}
+\texttt{nc\_mean} is the mean row width of the sparse activation bank over the visible prefix.
+
+\subsection{Probe pipeline and metrics}
+
+The base probe is \texttt{StandardScaler} $\rightarrow$ \texttt{TruncatedSVD} $\rightarrow$ \texttt{LogisticRegression}, fit separately per domain. Evaluation uses problem-grouped splits.
+
+The main early-stop summary is \textbf{AUC-of-AUROC (AoA)} over anchor positions $\{10,40,70,100\}$\%. We keep AoA because the paper is about how signal emerges over the trace, not only at the end. To avoid over-relying on a single summary, we also report AUROC@100\% and use a denser 10-anchor check as robustness. Bootstrap 95\% confidence intervals on AoA use $B=10{,}000$ resamplings of datasets within each domain.
+
+\section{Math is Strong; Science is Narrower}
+\label{sec:positive}
+
+Figure~\ref{fig:auroc} and Table~\ref{tab:positive} show the main cross-domain result. Math is the clearest success case. Science is positive but less clean. Coding is the failure case.
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\textwidth]{fig_auroc_by_anchor_v12_5.pdf}
+  \caption{%
+    \textbf{(a)} AUROC at each anchor position (10\%--100\% of trace visible) for the three domains.
+    Math rises early and remains high; science improves more gradually; coding stays flat.
+    \textbf{(b)} AoA with 95\% bootstrap CIs. The math--coding gap is large; the science result is intermediate.
+  }
+  \label{fig:auroc}
+\end{figure*}
+
+\begin{table}[t]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3.0pt}
+\begin{tabularx}{\columnwidth}{@{}lYYYY@{}}
+\toprule
+Domain & AoA & A100 & Fwd $\Delta$ & Bwd $\Delta$ \\
+\midrule
+Math    & \textbf{.958} [.931, .980] & \textbf{.982} & $-$.001 & $-$.006 \\
+Science & \textbf{.799} [.775, .822] & \textbf{.841} & $-$.010 & $-$.001 \\
+Coding  & .434 [.404, .464] & .407 & --- & --- \\
+\midrule
+\multicolumn{5}{l}{\textit{Baselines}} \\
+\texttt{tok\_conf} & .506 / .809 / .506 & .490 / .856 / .490 & --- & --- \\
+SC oracle$^\dagger$ & .953 / .921 / .961 & .953 / .921 / .961 & --- & --- \\
+\bottomrule
+\end{tabularx}
+\caption{Main holdout result. AoA = AUC-of-AUROC; values in brackets are 95\% CIs from per-dataset bootstrap ($B=10{,}000$). A100 = AUROC at the 100\% anchor. Frozen-basis $\Delta$AUROC: Fwd = source-to-target transfer gap; Bwd = target-to-source. Baseline rows report math/science/coding values. $^\dagger$SC oracle = self-consistency upper bound and uses ground truth.}
+\label{tab:positive}
+\end{table}
+
+\paragraph{Math: large and structured signal.}
+In math, the full probe substantially exceeds the token-confidence baseline: AoA $0.958$ vs.\ $0.685$, and AUROC@100\% $0.982$ vs.\ $0.684$. The signal also appears early. On a denser 10-anchor grid, math reaches 95\% of its final AUROC by 10\% of the trace and plateaus by 50\%, with dense-anchor AoA $0.968$.
+
+\paragraph{Science: useful, but narrower than math.}
+Science remains above chance and improves with more context, but it is not the same kind of result as math. The full probe reaches AoA $0.799$ and AUROC@100\% $0.841$, yet a one-dimensional \texttt{tok\_conf} baseline is slightly stronger (AoA $0.809$, AUROC@100\% $0.856$). The science signal is therefore real but not obviously driven by trajectory structure alone.
+
+\paragraph{Feature-importance contrast.}
+Permutation importance sharpens the difference. In math, the dominant feature is \texttt{traj\_reflection\_count} (importance $0.242$), followed by \texttt{traj\_continuity} ($0.092$) and \texttt{traj\_novelty} ($0.052$). The strongest signal is genuinely trajectory-shaped. In science, the top features are \texttt{tok\_gini\_tail} ($0.038$), \texttt{tok\_conf\_recency} ($0.033$), \texttt{tok\_conf\_prefix} ($0.033$), and only then \texttt{traj\_continuity} ($0.031$). This is the pattern of a confidence-heavy result, not a clean self-correction geometry.
+
+\paragraph{Frozen-basis transfer.}
+Frozen-basis transfer remains strong in math and weaker in science. Math has near-lossless forward/backward gaps ($-0.001$ and $-0.006$), while science shows a larger forward loss ($-0.010$). The simplest reading is that math has a more stable quality geometry across anchors.
+
+\paragraph{Dense-anchor robustness.}
+The four-anchor summary is not hiding a different story. On a denser 10-anchor grid, the domain ordering is unchanged: AoA is $0.968$ for math, $0.827$ for science, and $0.432$ for coding. Science continues to improve into later anchors; coding remains weak throughout.
+
+\section{Coding: The Ceiling Persists Across CoT-Surface Variants}
+\label{sec:coding}
+
+In coding, these hand-crafted CoT-surface features predict correctness poorly on unseen problems. We support this with several grouped-CV evaluations.
+
+\subsection{Main probe and scalar screen}
+
+The main coding probe reaches AoA $0.434$ and AUROC@100\% $0.407$, below the \texttt{tok\_conf} baseline (AoA $0.506$, AUROC@100\% $0.490$). A broader screen of 83 coding-side scalars improves only modestly: the best single oriented proxy is \texttt{struct\_density} (oriented AUROC $0.565$), followed by \texttt{cf\_n\_ifs} ($0.563$) and \texttt{cot\_trace\_count} ($0.558$). Even the best screened top-4 combination reaches only AUROC $0.556$.
+
+\paragraph{Interpretation.}
+These features are not pure noise. They carry weak and statistically detectable correlations. But the strongest effects are small, and their semantics are mixed. For example, deeper branching and more \texttt{if}-statements correlate weakly \emph{positively} with correctness, while denser structural narration correlates weakly negatively. There is variation, but it does not separate correct from incorrect solutions reliably.
+
+\subsection{Grouped family ablations}
+
+To check whether the failure is coming from a bad mixture rather than the whole family, we evaluate grouped feature subsets under 5-fold GroupKFold on the 10,688-run coding table. No subset is strong. \texttt{traj\_only} reaches AUROC $0.509$, \texttt{token\_plus\_traj} reaches $0.501$, and the full 30-feature surface family reaches $0.506$ in its best grouped-CV configuration. These are all effectively weak discrimination regimes.
+
+\subsection{Coding-specific CoT-only run judge}
+
+We then build a deliberately coding-specific CoT-only run judge from 19 surface features: planning/execution density, vocabulary overlap, structural flags, length summaries, one neuron count, and four one-hot \texttt{cot\_mode} indicators. This model is still cheap, still interpretable, and evaluated on unseen \texttt{problem\_id}s with 5-fold GroupKFold.
+
+The result is again weak. Mean out-of-fold AUC is $0.481 \pm 0.053$. By difficulty band, the judge stays near chance: hard $0.515$, mid $0.470$, easy $0.509$. In best-of-$64$ reranking, the out-of-fold judge achieves pass@1 $0.581$ against a random baseline of $0.587$ ($\Delta=-0.006$). The same surface cues that look somewhat meaningful within a problem do not transport cleanly to unseen problems.
+
+\subsection{Nonlinear and self-supervised checks}
+
+A one-hidden-layer MLP on the cached 25-dimensional feature family does not materially change the picture: mean-anchor AUROC is $0.499$ and AUROC@100\% is $0.507$.
+
+Self-supervised pre-training adds one more check, but we interpret it cautiously. Cross-domain SSL v1 collapses at one rank and never improves coding meaningfully. Domain-specific SSL v2 avoids collapse and offers a modest low-label regularization benefit, but the full-label coding ceiling remains weak: the best v2 configuration reaches AUROC $0.454$ at label fraction 1.0, while its best low-label point is $0.537$ at label fraction 0.05. We therefore treat SSL as supporting evidence that these objectives do not uncover additional label-relevant structure in this feature space, not as proof that no structure of any kind exists.
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\textwidth]{fig_ssl_ceiling_v12_5.pdf}
+  \caption{%
+    \textbf{SSL ceiling in coding vs.\ science.}
+    \textbf{(a)} In coding, the full-label ceiling remains weak across SSL variants.
+    \textbf{(b)} In science, SSL helps more in the low-label regime, which is consistent with a domain where the features do carry label-relevant structure.
+  }
+  \label{fig:ssl}
+\end{figure*}
+
+\subsection{De-knotting remains neutral in coding}
+
+A surface-level alternative explanation is that coding traces contain noisy circular spans that mask an otherwise useful signal. We test this by removing GLM-labeled knot spans from all cached per-token arrays, not only from the text.
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\textwidth]{fig_deknot_alldomains_v12_5.pdf}
+  \caption{%
+    \textbf{De-knotting across domains.}
+    Removing knot tokens hurts math, is nearly neutral in science, and is neutral in coding.
+    The coding failure is therefore not well explained by removable surface clutter.
+  }
+  \label{fig:deknot}
+\end{figure*}
+
+The result is asymmetric. In math, removing knot tokens hurts AUROC ($0.502 \rightarrow 0.453$, $\Delta=-0.049$), which means those spans are part of the signal. Science is nearly neutral ($\Delta=-0.006$). Coding is also neutral ($0.460 \rightarrow 0.466$, $\Delta=+0.006$). De-knotting does not rescue coding.
+
+\begin{table}[t]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3.0pt}
+\begin{tabularx}{\columnwidth}{@{}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{2.3cm}>{\raggedright\arraybackslash}p{1.45cm}@{}}
+\toprule
+Check & Best coding result & Reading \\
+\midrule
+Main probe & AoA .434 / A100 .407 & Below \texttt{tok\_conf} \\
+83-scalar screen & AUROC .556 & Weak proxy only \\
+Family ablations & AUROC .509 (\texttt{traj\_only}) & No stable subset \\
+CoT-only run judge & OOF AUC .481 $\pm$ .053 & Fails on unseen problems \\
+MLP & AUROC .499--.507 & No meaningful gain \\
+SSL v2 & .537 at lf=.05; .454 at lf=1.0 & Low-label regularizer only \\
+De-knotting & $\Delta = +.006$ & Neutral \\
+\bottomrule
+\end{tabularx}
+\caption{Coding-side checks in this revision. The numbers come from grouped or held-out evaluation already present in the artifact tables. None yields a strong, transportable coding verifier from cheap CoT-surface features alone.}
+\label{tab:convergence}
+\end{table}
+
+\section{Downstream Consequence: Best-of-\texorpdfstring{$N$}{N} Reranking}
+\label{sec:reranking}
+
+The cross-domain probe result is not only a metric story. It changes downstream selection.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{fig_reranking_v12_5.pdf}
+  \caption{%
+    Best-of-$N=64$ probe reranking. Math gains $+10.0$pp, science gains $+8.0$pp,
+    and coding is flat within uncertainty.
+  }
+  \label{fig:reranking}
+\end{figure}
+
+\begin{table}[t]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabularx}{\columnwidth}{@{}l c Y Y c@{}}
+\toprule
+Domain & $n$ & Random & Probe & $\Delta$ \\
+\midrule
+Math    & 120 & .642 [.572, .712] & .742 [.658, .817] & \textbf{$+$.100} \\
+Science & 198 & .602 [.550, .652] & .682 [.616, .748] & \textbf{$+$.080} \\
+Coding  & 167 & .617 [.545, .689] & .611 [.539, .683] & $-$.006 \\
+\bottomrule
+\end{tabularx}
+\caption{Best-of-$N=64$ reranking pass@1. Values in brackets are 95\% bootstrap CIs from problem resampling.}
+\label{tab:reranking}
+\end{table}
+
+Math and science benefit substantially. Coding does not. The coding-specific CoT-only run judge is no better: its out-of-fold reranking result is $0.581$ against the same random baseline of $0.587$. For this problem family, weak run-level discrimination translates into no useful selection lift.
+
+\section{Discussion}
+\label{sec:why}
+
+\paragraph{What the paper does claim.}
+Within this single-model study, cheap hand-crafted CoT-surface features are domain-specific measurement tools. They work very well in math, partly in science, and poorly in coding.
+
+\paragraph{What the paper does not claim.}
+We do not claim that correctness is absent from text in any absolute sense. We do not claim that raw-text classifiers, code-aware models, execution-aware selectors, hidden-state probes, or LLM judges must fail. A more likely explanation is that coding needs different signals, such as execution-aware ones.
+
+\paragraph{Why math and coding diverge.}
+In math, visible hesitation and convergence patterns are often downstream of the failure itself. Reflection loops, continuity breaks, and recency-weighted confidence all track whether the reasoning path has settled. In coding, final correctness is determined by the produced program under execution. A clean narrative can still compile to the wrong logic, and a messy narrative can still produce a correct implementation. The text trace is therefore farther from the target variable.
+
+\paragraph{Why science sits in the middle.}
+Science inherits some of the same verbal uncertainty cues as math, but the evidence in this revision suggests that much of the usable signal comes from token confidence rather than from a strong trajectory geometry. That is why science looks positive in aggregate yet weaker on deeper inspection.
+
+\paragraph{What would strengthen the next revision.}
+Next, we would test a second model, include a raw-text or LLM-judge baseline, and add an execution-aware positive control. Those experiments would tell us whether the current failure is specific to this feature family, this model, or both.
+
+\section{Limitations and Conclusion}
+\label{sec:limits}
+
+\paragraph{Limitations.}
+First, all experiments use a single model, \textbf{DeepSeek-R1-0528-Qwen3-8B}. Second, the strongest added coding check in this revision is still a hand-crafted CoT-only judge; we do not yet include a raw-text classifier or external LLM judge. Third, the coding side still lacks an execution-aware positive control. Fourth, the SSL conclusion is objective-specific: it shows failure under the tested pretraining losses, not a universal impossibility result.
+
+\paragraph{Conclusion.}
+We make a narrower claim than before. The evidence supports the following statement:
+
+\begin{quote}
+\textbf{Hand-crafted CoT-surface features transfer well to math, only partly to science, and poorly to coding correctness on unseen problems in this single-model study.}
+\end{quote}
+
+That is still a useful negative result. It says that cheap CoT measurements should be treated as domain-specific instruments, not as drop-in correctness proxies. In coding, at least for this model and this feature family, they are the wrong instrument.
+
+\paragraph{Code and artifacts.}
+The public repository for this project is \url{https://github.com/Chi-Shan0707/code-not-text}. In the local snapshot used for this draft, code and paper assets remain under \texttt{workshop/cotknot/}. Paper sources are in \texttt{workshop/cotknot/paper/}. Quantitative tables used here come from \texttt{results/tables/} and \texttt{workshop/cotknot/results/tables/}. The coding-side robustness checks in this revision rely in particular on four artifacts: \texttt{results/tables/coding\_feature\_family\_ablation.csv}, \texttt{results/tables/cot\_run\_judge\_scores.csv}, \texttt{results/tables/cot\_run\_judge\_rerank.csv}, and \texttt{results/models/cot\_run\_judge.summary.json}.
+
+\bibliographystyle{plainnat}
+\begin{thebibliography}{16}
+
+\bibitem{wei2022cot}
+Jason Wei et al.
+\newblock Chain-of-thought prompting elicits reasoning in large language models.
+\newblock In \emph{NeurIPS}, 2022.
+
+\bibitem{cobbe2021training}
+Karl Cobbe et al.
+\newblock Training verifiers to solve math word problems.
+\newblock \emph{arXiv:2110.14168}, 2021.
+
+\bibitem{lightman2023verify}
+Hunter Lightman et al.
+\newblock Let's verify step by step.
+\newblock \emph{arXiv:2305.20050}, 2023.
+
+\bibitem{wang2024mathshepherd}
+Peiyi Wang et al.
+\newblock Math-Shepherd: Verify and reinforce {LLM}s step-by-step without human annotations.
+\newblock In \emph{ACL}, 2024.
+
+\bibitem{zheng2025processbench}
+Chujie Zheng et al.
+\newblock ProcessBench: Identifying process errors in mathematical reasoning.
+\newblock In \emph{ACL}, 2025.
+
+\bibitem{zhang2025genrm}
+Lunjun Zhang et al.
+\newblock Generative verifiers: Reward modeling as next-token prediction.
+\newblock In \emph{ICLR}, 2025.
+
+\bibitem{lanham2023faithfulness}
+Tamera Lanham et al.
+\newblock Measuring faithfulness in chain-of-thought reasoning.
+\newblock \emph{arXiv:2307.13702}, 2023.
+
+\bibitem{huang2024selfcorrect}
+Jie Huang et al.
+\newblock Large language models cannot self-correct reasoning yet.
+\newblock \emph{arXiv:2310.01798}, 2023.
+
+\bibitem{liu2024intrinsic}
+Dancheng Liu et al.
+\newblock Large language models have intrinsic self-correction ability.
+\newblock In \emph{NeurIPS}, 2024.
+
+\bibitem{madaan2023selfrefine}
+Aman Madaan et al.
+\newblock Self-Refine: Iterative refinement with self-feedback.
+\newblock \emph{arXiv:2303.17651}, 2023.
+
+\bibitem{shinn2023reflexion}
+Noah Shinn et al.
+\newblock Reflexion: Language agents with verbal reinforcement learning.
+\newblock \emph{arXiv:2303.11366}, 2023.
+
+\bibitem{chen2022codet}
+Bei Chen et al.
+\newblock CodeT: Code generation with generated tests.
+\newblock \emph{arXiv:2207.10397}, 2022.
+
+\bibitem{vandenberg2000review}
+Robert E.\ Vandenberg and Charles E.\ Lance.
+\newblock A review and synthesis of the measurement invariance literature.
+\newblock \emph{Organizational Research Methods}, 3(1):4--70, 2000.
+
+\bibitem{belinkov2022probing}
+Yonatan Belinkov.
+\newblock Probing classifiers: Promises, shortcomings, and advances.
+\newblock \emph{Computational Linguistics}, 48(1):207--219, 2022.
+
+\end{thebibliography}
+
+\end{document}
