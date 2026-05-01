@@ -37,9 +37,18 @@ dist/
 # Temp folder (old drafts, scratch, audit files)
 temp/
 
-# Old paper version PDFs (archived; only paper_v12.pdf is tracked)
+# Old paper version PDFs (archived; only paper_v12.pdf and paper_v13.pdf are tracked)
 paper/paper_v7_5.pdf
 paper/paper_v8.pdf
 paper/paper_v9.pdf
 paper/paper_v10.pdf
 paper/paper_v11.pdf
+paper/paper_v12.pdf
+paper/paper_v12.1.pdf
+paper/paper_v12.5.pdf
+
+# Intermediate LaTeX files
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.fls
