@@ -37,7 +37,7 @@ dist/
 # Temp folder (old drafts, scratch, audit files)
 temp/
 
-# Old paper version PDFs (archived; only paper_v12.pdf and paper_v13.pdf are tracked)
+# Old paper version PDFs (archived; only paper_v13.pdf is tracked as latest)
 paper/paper_v7_5.pdf
 paper/paper_v8.pdf
 paper/paper_v9.pdf
@@ -47,8 +47,42 @@ paper/paper_v12.pdf
 paper/paper_v12.1.pdf
 paper/paper_v12.5.pdf
 
-# Intermediate LaTeX files
+# Intermediate LaTeX source files (only v13 is tracked)
+paper/paper_v9.tex
+paper/paper_v10.tex
+paper/paper_v11.tex
+paper/paper_v12.tex
+paper/paper_v12.1.tex
+paper/paper_v12.5.tex
+
+# Intermediate LaTeX build files
 paper/*.aux
 paper/*.log
 paper/*.out
 paper/*.fls
+paper/*.fdb_latexmk
+paper/*.run.xml
+paper/*.synctex.gz
+paper/*.toc
+paper/*.bbl
+paper/*.bcf
+paper/*.blg
+
+# Intermediate figure versions (only v12_5 is tracked as latest)
+figures/fig_auroc_by_anchor_v12.pdf
+figures/fig_auroc_by_anchor_v12_1.pdf
+figures/fig_deknot_alldomains_v12.pdf
+figures/fig_deknot_alldomains_v12_1.pdf
+figures/fig_reranking_v12.pdf
+figures/fig_reranking_v12_1.pdf
+figures/fig_ssl_ceiling_v12.pdf
+figures/fig_ssl_ceiling_v12_1.pdf
+
+# Intermediate script versions (only v12_5 is tracked as latest)
+scripts/gen_figures_v12.py
+scripts/gen_figures_v12_1.py
+
+# NeurIPS style files (not needed for this workshop paper)
+paper/neurips_2025_style/
+paper/neurips_2025.sty
+paper/neurips_checklist_*.tex
