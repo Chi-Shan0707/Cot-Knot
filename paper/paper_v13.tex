@@ -18,8 +18,8 @@
 \newcolumntype{Y}{>{\centering\arraybackslash}X}
 \graphicspath{{../figures/}{./}}
 
-\title{\textbf{Cross-Domain Limits of Hand-Crafted CoT-Surface Features:\\[4pt]
-\large Strong in Math, Narrow in Science, Weak in Coding}}
+\title{\textbf{Cross-Domain Limits of Hand-Crafted CoT-Surface Features}\\[4pt]
+\large Strong Performance in Math, Narrower Gains in Science, Weak Results in Coding}
 \author{Yuhan Chi\\Fudan University\\\texttt{yhchi25@m.fudan.edu.cn}}
 \date{}
 
@@ -91,7 +91,7 @@ The base probe is \texttt{StandardScaler} $\rightarrow$ \texttt{TruncatedSVD} $\
 
 The main early-stop summary is \textbf{AUC-of-AUROC (AoA)} over anchor positions $\{10,40,70,100\}$\%. We keep AoA because the paper is about how signal emerges over the trace, not only at the end. To avoid over-relying on a single summary, we also report AUROC@100\% and use a denser 10-anchor check as robustness. Bootstrap 95\% confidence intervals on AoA use $B=10{,}000$ resamplings of datasets within each domain.
 
-\section{Math is Strong; Science is Narrower}
+\section{Mathematical Reasoning: Strong Signal; Science: Narrower Signal}
 \label{sec:positive}
 
 Figure~\ref{fig:auroc} and Table~\ref{tab:positive} show the main cross-domain result. Math is the clearest success case. Science is positive but less clean. Coding is the failure case.
@@ -100,9 +100,9 @@ Figure~\ref{fig:auroc} and Table~\ref{tab:positive} show the main cross-domain r
   \centering
   \includegraphics[width=\textwidth]{fig_auroc_by_anchor_v12_5.pdf}
   \caption{%
-    \textbf{(a)} AUROC at each anchor position (10\%--100\% of trace visible) for the three domains.
-    Math rises early and remains high; science improves more gradually; coding stays flat.
-    \textbf{(b)} AoA with 95\% bootstrap CIs. The math--coding gap is large; the science result is intermediate.
+    \textbf{(a)} AUROC at each anchor position (10\%--100\% of trace visible) across domains.
+    Mathematical reasoning rises early and stays high; science improves gradually; coding remains flat.
+    \textbf{(b)} AoA with 95\% bootstrap CIs. The math--coding gap is substantial; science occupies an intermediate position.
   }
   \label{fig:auroc}
 \end{figure*}
@@ -124,7 +124,7 @@ Coding  & .434 [.404, .464] & .407 & --- & --- \\
 SC oracle$^\dagger$ & .953 / .921 / .961 & .953 / .921 / .961 & --- & --- \\
 \bottomrule
 \end{tabularx}
-\caption{Main holdout result. AoA = AUC-of-AUROC; values in brackets are 95\% CIs from per-dataset bootstrap ($B=10{,}000$). A100 = AUROC at the 100\% anchor. Frozen-basis $\Delta$AUROC: Fwd = source-to-target transfer gap; Bwd = target-to-source. Baseline rows report math/science/coding values. $^\dagger$SC oracle = self-consistency upper bound and uses ground truth.}
+\caption{Main holdout results. AoA = AUC-of-AUROC; values in brackets are 95\% CIs from per-dataset bootstrap ($B=10{,}000$). A100 = AUROC at the 100\% anchor. Frozen-basis $\Delta$AUROC: Fwd = source-to-target transfer gap; Bwd = target-to-source. Baseline rows show math/science/coding values. $^\dagger$SC oracle = self-consistency upper bound using ground truth.}
 \label{tab:positive}
 \end{table}
 
@@ -143,7 +143,7 @@ Cross-anchor transfer behaves differently across domains. Math exhibits near-los
 \paragraph{Dense-anchor robustness.}
 The four-anchor summary captures the main pattern. On a denser 10-anchor grid, the domain ordering remains unchanged: AoA reaches $0.968$ for math, $0.827$ for science, and $0.432$ for coding. Science continues improving into later anchors, whereas coding stays weak throughout.
 
-\section{Coding: The Ceiling Persists Across CoT-Surface Variants}
+\section{Coding: Persistent Weakness Across CoT-Surface Variants}
 \label{sec:coding}
 
 For coding, these hand-crafted CoT-surface features fail to predict correctness on unseen problems. We demonstrate this through multiple grouped cross-validation evaluations.
@@ -177,7 +177,7 @@ Self-supervised pre-training provides further evidence. Cross-domain SSL v1 coll
   \caption{%
     \textbf{SSL ceiling in coding vs.\ science.}
     \textbf{(a)} In coding, the full-label ceiling remains weak across SSL variants.
-    \textbf{(b)} In science, SSL helps more in the low-label regime, which is consistent with a domain where the features do carry label-relevant structure.
+    \textbf{(b)} Science: SSL provides greater low-label benefits, consistent with a domain where features carry label-relevant structure.
   }
   \label{fig:ssl}
 \end{figure*}
@@ -190,9 +190,9 @@ One alternative explanation is that coding traces contain noisy circular spans o
   \centering
   \includegraphics[width=\textwidth]{fig_deknot_alldomains_v12_5.pdf}
   \caption{%
-    \textbf{De-knotting across domains.}
-    Removing knot tokens hurts math, is nearly neutral in science, and is neutral in coding.
-    The coding failure is therefore not well explained by removable surface clutter.
+    \textbf{De-knotting effects across domains.}
+    Removing knot tokens degrades math performance, shows minimal effect in science, and remains neutral for coding.
+    The coding weakness is therefore not attributable to removable surface clutter.
   }
   \label{fig:deknot}
 \end{figure*}
@@ -216,11 +216,11 @@ SSL v2 & .537 at lf=.05; .454 at lf=1.0 & Low-label regularizer only \\
 De-knotting & $\Delta = +.006$ & Neutral \\
 \bottomrule
 \end{tabularx}
-\caption{Coding-side checks in this revision. The numbers come from grouped or held-out evaluation already present in the artifact tables. None yields a strong, transportable coding verifier from cheap CoT-surface features alone.}
+\caption{Coding-side robustness checks. Results are drawn from grouped or held-out evaluation in the artifact tables. No approach produces a strong, generalizable coding verifier using only cheap CoT-surface features.}
 \label{tab:convergence}
 \end{table}
 
-\section{Downstream Consequence: Best-of-\texorpdfstring{$N$}{N} Reranking}
+\section{Downstream Impact: Best-of-\texorpdfstring{$N$}{N} Reranking}
 \label{sec:reranking}
 
 The cross-domain probe results affect more than just metrics---they change downstream selection behavior.
@@ -229,8 +229,8 @@ The cross-domain probe results affect more than just metrics---they change downs
   \centering
   \includegraphics[width=\linewidth]{fig_reranking_v12_5.pdf}
   \caption{%
-    Best-of-$N=64$ probe reranking. Math gains $+10.0$pp, science gains $+8.0$pp,
-    and coding is flat within uncertainty.
+    Best-of-$N=64$ probe reranking results. Math gains $+10.0$pp, science gains $+8.0$pp,
+    and coding shows no meaningful improvement.
   }
   \label{fig:reranking}
 \end{figure}
@@ -248,7 +248,7 @@ Science & 198 & .602 [.550, .652] & .682 [.616, .748] & \textbf{$+$.080} \\
 Coding  & 167 & .617 [.545, .689] & .611 [.539, .683] & $-$.006 \\
 \bottomrule
 \end{tabularx}
-\caption{Best-of-$N=64$ reranking pass@1. Values in brackets are 95\% bootstrap CIs from problem resampling.}
+\caption{Best-of-$N=64$ reranking pass@1. Values in brackets are 95\% bootstrap CIs from problem-level resampling.}
 \label{tab:reranking}
 \end{table}
 
