@@ -29,22 +29,22 @@
 \begin{abstract}
 Can simple summaries of chain-of-thought (CoT) traces indicate whether a solution is correct? We study one family of such features---hand-crafted CoT-surface and token-trajectory descriptors---using \textbf{DeepSeek-R1-0528-Qwen3-8B} across math, science, and coding tasks.
 
-The results vary sharply by domain. In math, the signal is strong: our probe achieves AUC-of-AUROC (AoA) 0.958 and AUROC@100\% 0.982, with dense-anchor curves plateauing early and best-of-$N=64$ reranking improving by $+10.0$ percentage points. Science shows a weaker, narrower pattern: the full probe reaches AoA 0.799 and AUROC@100\% 0.841, but does not exceed a simple token-confidence baseline (0.809 / 0.856), with permutation importance concentrated on confidence-based features.
+Results differ substantially across domains. In math, the signal is strong: our probe achieves AUC-of-AUROC (AoA) 0.958 and AUROC@100\% 0.982, with dense-anchor curves plateauing early and best-of-$N=64$ reranking improving by $+10.0$ percentage points. Science shows a different pattern: the full probe reaches AoA 0.799 and AUROC@100\% 0.841 but does not exceed a simple token-confidence baseline (0.809 / 0.856), with permutation importance concentrated on confidence-based features.
 
-Coding tells a different story. On LiveCodeBench-v5, the main probe drops to AoA 0.434 and AUROC@100\% 0.407. Sweeping 83 coding-specific scalars peaks at AUROC 0.556. Grouped feature ablations remain near chance. A coding-specific CoT-only judge using 19 surface features achieves 5-fold GroupKFold out-of-fold AUC of $0.481 \pm 0.053$ and no best-of-$64$ gain ($-0.006$). Neither nonlinear models nor self-supervised pre-training substantially improve performance, and token-level de-knotting shows no benefit.
+Coding presents a distinct contrast. On LiveCodeBench-v5, the main probe achieves only AoA 0.434 and AUROC@100\% 0.407. Sweeping 83 coding-specific scalars peaks at AUROC 0.556. Grouped feature ablations remain near chance. A coding-specific CoT-only judge using 19 surface features achieves 5-fold GroupKFold out-of-fold AUC of $0.481 \pm 0.053$ and no best-of-$64$ gain ($-0.006$). Neither nonlinear models nor self-supervised pre-training substantially improve performance, and token-level de-knotting shows no benefit.
 
-We therefore draw a narrower conclusion than earlier drafts: in this single-model study, hand-crafted CoT-surface features work well for math, partially for science, and poorly for coding correctness on unseen problems. This does not imply that raw-text classifiers, code-aware models, execution-aware selectors, or hidden-state probes must fail. Rather, it identifies one specific feature family whose semantics do not transfer cleanly to code verification.
+We therefore draw a narrower conclusion than earlier drafts: in this single-model study, hand-crafted CoT-surface features work well for math, partially for science, and poorly for coding correctness on unseen problems. This finding does not imply that raw-text classifiers, code-aware models, execution-aware selectors, or hidden-state probes must fail. Rather, it identifies one specific feature family whose semantics do not transfer cleanly to code verification.
 \end{abstract}
 
 \section{Introduction}
 
 Process supervision and verifier-based reranking typically assume that answer quality leaves detectable traces in the generated chain of thought. This assumption often holds in mathematical reasoning, but its validity in coding remains unclear.
 
-We examine a focused question: rather than asking whether all text-based verifiers fail on code, we investigate whether one particular family---cheap, interpretable CoT-surface features---transfers across domains. This family comprises token-confidence summaries, trajectory statistics, and activation-based descriptors. These features are computationally lightweight and straightforward to evaluate at test time.
+We examine a focused question: rather than asking whether all text-based verifiers fail on code, we investigate whether one particular family---cheap, interpretable CoT-surface features---transfers across domains. This family comprises token-confidence summaries, trajectory statistics, and activation-based descriptors that are computationally lightweight and straightforward to evaluate at test time.
 
 Domain-specific results differ markedly. Mathematical reasoning exhibits strong early signals. Science problems show usable but narrower signals, primarily driven by token confidence. Coding presents a clear contrast: across multiple approaches---the main probe, extended scalar sweeps, grouped feature ablations, a coding-specific judge, nonlinear models, self-supervised pre-training, and token-level de-knotting---performance on unseen problems remains weak.
 
-Our contribution is empirical: we demonstrate where this feature family excels (math), where it provides partial but limited utility (science), and where it fails to transfer (coding). This negative result has value---if a simple verifier does not work in a domain, it indicates that the chosen features do not reliably track correctness in that setting.
+Our contribution is empirical: we demonstrate where this feature family excels (math), where it provides partial but limited utility (science), and where it fails to transfer (coding). This negative result has value---it shows that the chosen features do not reliably track correctness in all domains, even when they succeed in some.
 
 \section{Related Work}
 
@@ -129,7 +129,7 @@ SC oracle$^\dagger$ & .953 / .921 / .961 & .953 / .921 / .961 & --- & --- \\
 \end{table}
 
 \paragraph{Math: strong and structured signal.}
-The math probe substantially outperforms the token-confidence baseline: AoA $0.958$ versus $0.685$, and AUROC@100\% $0.982$ versus $0.684$. This signal emerges early. On a denser 10-anchor grid, math reaches 95\% of its final AUROC by the 10\% anchor and plateaus by 50\%, achieving dense-anchor AoA $0.968$.
+The math probe substantially outperforms the token-confidence baseline: AoA $0.958$ versus $0.685$, and AUROC@100\% $0.982$ versus $0.684$. This signal emerges early---on a denser 10-anchor grid, math reaches 95\% of its final AUROC by the 10\% anchor and plateaus by 50\%, achieving dense-anchor AoA $0.968$.
 
 \paragraph{Science: usable but narrower than math.}
 Science results stay above chance and improve with more context, yet differ qualitatively from math. The full probe achieves AoA $0.799$ and AUROC@100\% $0.841$, while a simple \texttt{tok\_conf} baseline reaches slightly higher values (AoA $0.809$, AUROC@100\% $0.856$). The science signal is genuine but appears largely confidence-driven rather than trajectory-structured.
@@ -150,7 +150,7 @@ For coding, these hand-crafted CoT-surface features fail to predict correctness 
 
 \subsection{Main probe and scalar screen}
 
-The main coding probe achieves AoA $0.434$ and AUROC@100\% $0.407$, below the \texttt{tok\_conf} baseline (AoA $0.506$, AUROC@100\% $0.490$). Screening 83 coding-specific scalars yields limited improvement: the best single feature, \texttt{struct\_density}, reaches oriented AUROC $0.565$, followed by \texttt{cf\_n\_ifs} ($0.563$) and \texttt{cot\_trace\_count} ($0.558$). Even the optimal top-4 combination only achieves AUROC $0.556$.
+The main coding probe achieves AoA $0.434$ and AUROC@100\% $0.407$, below the \texttt{tok\_conf} baseline (AoA $0.506$, AUROC@100\% $0.490$). Screening 83 coding-specific scalars yields limited improvement: the best single feature, \texttt{struct\_density}, reaches oriented AUROC $0.565$, followed by \texttt{cf\_n\_ifs} ($0.563$) and \texttt{cot\_trace\_count} ($0.558$). Even the optimal top-4 combination achieves only AUROC $0.556$.
 
 \paragraph{Interpretation.}
 These features are not pure noise---they exhibit weak but detectable correlations. However, the strongest effects remain small and semantically mixed. For instance, deeper branching and more \texttt{if}-statements weakly correlate positively with correctness, while denser structural narration shows weak negative correlation. While variation exists, it does not reliably separate correct from incorrect solutions.
