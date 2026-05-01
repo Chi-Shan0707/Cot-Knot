@@ -40,11 +40,11 @@ We therefore draw a narrower conclusion than earlier drafts: in this single-mode
 
 Process supervision and verifier-based reranking typically assume that answer quality leaves detectable traces in the generated chain of thought. This assumption often holds in mathematical reasoning, but its validity in coding remains unclear.
 
-We examine a focused question: rather than asking whether all text-based verifiers fail on code, we investigate whether one particular family---cheap, interpretable CoT-surface features---transfers across domains. This family includes token-confidence summaries, trajectory statistics, and activation-based descriptors. These features are computationally lightweight and straightforward to evaluate.
+We examine a focused question: rather than asking whether all text-based verifiers fail on code, we investigate whether one particular family---cheap, interpretable CoT-surface features---transfers across domains. This family comprises token-confidence summaries, trajectory statistics, and activation-based descriptors. These features are computationally lightweight and straightforward to evaluate at test time.
 
-The domain-specific results differ markedly. Mathematical reasoning exhibits strong early signals. Science problems show usable but narrower signals, primarily driven by token confidence. Coding presents a contrast: across multiple approaches---the main probe, extended scalar sweeps, grouped feature ablations, a coding-specific judge, nonlinear models, self-supervised pre-training, and token-level de-knotting---performance on unseen problems remains weak.
+Domain-specific results differ markedly. Mathematical reasoning exhibits strong early signals. Science problems show usable but narrower signals, primarily driven by token confidence. Coding presents a clear contrast: across multiple approaches---the main probe, extended scalar sweeps, grouped feature ablations, a coding-specific judge, nonlinear models, self-supervised pre-training, and token-level de-knotting---performance on unseen problems remains weak.
 
-Our contribution is empirical: we demonstrate where this feature family excels (math), where it provides partial but limited utility (science), and where it fails to transfer (coding). This negative result is valuable in itself---if a simple verifier does not work in a domain, it suggests that the chosen features do not reliably track correctness there.
+Our contribution is empirical: we demonstrate where this feature family excels (math), where it provides partial but limited utility (science), and where it fails to transfer (coding). This negative result has value---if a simple verifier does not work in a domain, it indicates that the chosen features do not reliably track correctness in that setting.
 
 \section{Related Work}
 
@@ -89,12 +89,12 @@ The main probe uses five hand-crafted features computed from cached token stream
 
 The base probe is \texttt{StandardScaler} $\rightarrow$ \texttt{TruncatedSVD} $\rightarrow$ \texttt{LogisticRegression}, fit separately per domain. Evaluation uses problem-grouped splits.
 
-The main early-stop summary is \textbf{AUC-of-AUROC (AoA)} over anchor positions $\{10,40,70,100\}$\%. We keep AoA because the paper is about how signal emerges over the trace, not only at the end. To avoid over-relying on a single summary, we also report AUROC@100\% and use a denser 10-anchor check as robustness. Bootstrap 95\% confidence intervals on AoA use $B=10{,}000$ resamplings of datasets within each domain.
+The main early-stop summary is \textbf{AUC-of-AUROC (AoA)} over anchor positions $\{10,40,70,100\}$\%. We use AoA because the paper examines how signal emerges over the trace, not only at the end. To avoid over-relying on a single summary, we also report AUROC@100\% and use a denser 10-anchor check for robustness. Bootstrap 95\% confidence intervals on AoA use $B=10{,}000$ resamplings within each domain.
 
 \section{Mathematical Reasoning: Strong Signal; Science: Narrower Signal}
 \label{sec:positive}
 
-Figure~\ref{fig:auroc} and Table~\ref{tab:positive} show the main cross-domain result. Math is the clearest success case. Science is positive but less clean. Coding is the failure case.
+Figure~\ref{fig:auroc} and Table~\ref{tab:positive} present the main cross-domain results. Math represents the clearest success case. Science shows positive but less clean results. Coding represents the failure case.
 
 \begin{figure*}[t]
   \centering
@@ -161,7 +161,7 @@ To test whether failure stems from a specific subset rather than the entire fami
 
 \subsection{Coding-specific CoT-only run judge}
 
-We then construct a coding-specific CoT-only judge using 19 surface features: planning and execution density, vocabulary overlap, structural flags, length summaries, one neuron count, and four one-hot \texttt{cot\_mode} indicators. This model remains cheap and interpretable, evaluated on unseen \texttt{problem\_id}s with 5-fold GroupKFold.
+We then construct a coding-specific CoT-only judge using 19 surface features: planning and execution density, vocabulary overlap, structural flags, length summaries, one neuron count, and four one-hot \texttt{cot\_mode} indicators. This model remains cheap and interpretable, evaluated on unseen \texttt{problem\_id}s using 5-fold GroupKFold.
 
 Performance remains weak. Mean out-of-fold AUC is $0.481 \pm 0.053$. By difficulty band, results stay near chance: hard $0.515$, mid $0.470$, easy $0.509$. In best-of-$64$ reranking, the judge achieves pass@1 $0.581$ against a random baseline of $0.587$ ($\Delta=-0.006$). Surface cues that appear meaningful within problems do not generalize to unseen problems.
 
@@ -184,7 +184,7 @@ Self-supervised pre-training provides further evidence. Cross-domain SSL v1 coll
 
 \subsection{De-knotting remains neutral in coding}
 
-One alternative explanation is that coding traces contain noisy circular spans obscuring an otherwise useful signal. We test this by removing GLM-labeled knot spans from all cached per-token arrays, not just the text.
+One alternative explanation posits that coding traces contain noisy circular spans that obscure an otherwise useful signal. We test this by removing GLM-labeled knot spans from all cached per-token arrays, not just from the text.
 
 \begin{figure*}[t]
   \centering
@@ -197,7 +197,7 @@ One alternative explanation is that coding traces contain noisy circular spans o
   \label{fig:deknot}
 \end{figure*}
 
-The results differ by domain. In math, removing knot tokens degrades AUROC ($0.502 \rightarrow 0.453$, $\Delta=-0.049$), indicating these spans contribute to the signal. Science shows minimal change ($\Delta=-0.006$). Coding remains neutral ($0.460 \rightarrow 0.466$, $\Delta=+0.006$). De-knotting does not improve coding performance.
+Results differ by domain. In math, removing knot tokens degrades AUROC ($0.502 \rightarrow 0.453$, $\Delta=-0.049$), indicating these spans contribute to the signal. Science shows minimal change ($\Delta=-0.006$). Coding remains neutral ($0.460 \rightarrow 0.466$, $\Delta=+0.006$). De-knotting does not rescue coding performance.
 
 \begin{table}[t]
 \centering
@@ -270,7 +270,7 @@ In math, visible hesitation and convergence patterns often reflect underlying re
 Science problems share some verbal uncertainty cues with math, but our results suggest the usable signal comes primarily from token confidence rather than strong trajectory structure. This explains why science appears positive in aggregate but weaker on closer inspection.
 
 \paragraph{Future work.}
-Subsequent revisions should test a second model, include raw-text or LLM-judge baselines, and add an execution-aware positive control. These experiments would clarify whether the current failure is specific to this feature family, this model, or both.
+Subsequent work should test a second model, include raw-text or LLM-judge baselines, and add an execution-aware positive control. These experiments would clarify whether the current failure is specific to this feature family, this model, or both.
 
 \section{Limitations and Conclusion}
 \label{sec:limits}
