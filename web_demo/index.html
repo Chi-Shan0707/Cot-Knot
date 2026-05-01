@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Not Text - Cross-Domain Limits of CoT Quality Measurement</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1 class="title">Code Correctness Is Not in the Text</h1>
+            <p class="subtitle">Five Methods, One Ceiling: Convergent Evidence for CoT Quality Measurement Breakdown in Coding</p>
+            <div class="author">
+                <span>Yuhan Chi</span> ·
+                <span>Fudan University</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Finding Section -->
+    <section class="key-finding">
+        <div class="container">
+            <h2>🔍 The Key Discovery</h2>
+            <div class="discovery-box">
+                <p class="lead">
+                    Can we predict solution correctness from chain-of-thought traces?
+                    <strong>The answer depends dramatically on the domain.</strong>
+                </p>
+            </div>
+
+            <div class="domains-grid">
+                <div class="domain-card math">
+                    <div class="domain-icon">📐</div>
+                    <h3>Math</h3>
+                    <div class="metric">
+                        <span class="value">0.958</span>
+                        <span class="label">AoA</span>
+                    </div>
+                    <p class="verdict">✅ Strong Signal</p>
+                    <div class="detail">Features capture "failure to converge" in reasoning</div>
+                </div>
+
+                <div class="domain-card science">
+                    <div class="domain-icon">🔬</div>
+                    <h3>Science</h3>
+                    <div class="metric">
+                        <span class="value">0.799</span>
+                        <span class="label">AoA</span>
+                    </div>
+                    <p class="verdict">⚠️ Narrow Signal</p>
+                    <div class="detail">Confidence-driven, limited transferability</div>
+                </div>
+
+                <div class="domain-card coding">
+                    <div class="domain-icon">💻</div>
+                    <h3>Coding</h3>
+                    <div class="metric">
+                        <span class="value">0.434</span>
+                        <span class="label">AoA</span>
+                    </div>
+                    <p class="verdict">❌ Signal Breakdown</p>
+                    <div class="detail">Features don't capture execution-dependent correctness</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visual Comparison -->
+    <section class="comparison">
+        <div class="container">
+            <h2>📊 Cross-Domain Performance Gap</h2>
+            <div class="chart-container">
+                <canvas id="performanceChart"></canvas>
+            </div>
+            <p class="chart-caption">
+                AUROC by domain at full trace visibility. The math-coding gap (0.982 vs 0.407)
+                represents a fundamental measurement invariance failure.
+            </p>
+        </div>
+    </section>
+
+    <!-- Five Methods -->
+    <section class="methods">
+        <div class="container">
+            <h2>🧪 Five Methods, One Ceiling</h2>
+            <p class="methods-intro">
+                All five approaches converge on the same result for coding:
+                token-trajectory features don't predict code correctness.
+            </p>
+
+            <div class="methods-grid">
+                <div class="method-card">
+                    <div class="method-number">1</div>
+                    <h3>Interpretable Probe</h3>
+                    <p>LogReg + SVD with hand-crafted features</p>
+                    <div class="result">
+                        <span class="metric-label">Coding AUROC:</span>
+                        <span class="metric-value poor">0.434</span>
+                    </div>
+                    <div class="verdict">Below baseline</div>
+                </div>
+
+                <div class="method-card">
+                    <div class="method-number">2</div>
+                    <h3>Feature Sweep</h3>
+                    <p>83 coding-specific scalars tested</p>
+                    <div class="result">
+                        <span class="metric-label">Best Result:</span>
+                        <span class="metric-value weak">0.556</span>
+                    </div>
+                    <div class="verdict">Weak correlations only</div>
+                </div>
+
+                <div class="method-card">
+                    <div class="method-number">3</div>
+                    <h3>Nonlinear MLP</h3>
+                    <p>Deep neural network classifier</p>
+                    <div class="result">
+                        <span class="metric-label">Coding AUROC:</span>
+                        <span class="metric-value poor">0.499–0.507</span>
+                    </div>
+                    <div class="verdict">No meaningful gain</div>
+                </div>
+
+                <div class="method-card">
+                    <div class="method-number">4</div>
+                    <h3>SSL Pre-training</h3>
+                    <p>42K unlabeled traces, domain-specific</p>
+                    <div class="result">
+                        <span class="metric-label">Full-label ceiling:</span>
+                        <span class="metric-value poor">0.454</span>
+                    </div>
+                    <div class="verdict">Low-label regularizer only</div>
+                </div>
+
+                <div class="method-card">
+                    <div class="method-number">5</div>
+                    <h3>De-knotting</h3>
+                    <p>Remove circular reasoning spans</p>
+                    <div class="result">
+                        <span class="metric-label">AUROC Change:</span>
+                        <span class="metric-value neutral">+0.006</span>
+                    </div>
+                    <div class="verdict">Neutral effect</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why It Matters -->
+    <section class="implications">
+        <div class="container">
+            <h2>💡 Why This Matters</h2>
+            <div class="implications-grid">
+                <div class="implication-card">
+                    <h3>🔬 Measurement Theory</h3>
+                    <p>Demonstrates <strong>measurement invariance failure</strong>: same features measure different constructs across domains.</p>
+                </div>
+
+                <div class="implication-card">
+                    <h3>🚫 Practical Limits</h3>
+                    <p>Shows where <strong>cheap verifiers work</strong> (math) and where they fail (coding)—guides tool development.</p>
+                </div>
+
+                <div class="implication-card">
+                    <h3>🎯 Domain Awareness</h3>
+                    <p>Highlights need for <strong>domain-specific verification</strong> strategies, not one-size-fits-all approaches.</p>
+                </div>
+
+                <div class="implication-card">
+                    <h3>⚡ Execution Matters</h3>
+                    <p>For coding, <strong>execution-aware verification</strong> is likely essential—text features are fundamentally limited.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reranking Impact -->
+    <section class="reranking">
+        <div class="container">
+            <h2>🎯 Real-World Impact: Best-of-N Reranking</h2>
+            <div class="reranking-chart-container">
+                <canvas id="rerankingChart"></canvas>
+            </div>
+            <div class="reranking-impact">
+                <div class="impact-item">
+                    <span class="domain">Math:</span>
+                    <span class="gain positive">+10.0% pass@1</span>
+                </div>
+                <div class="impact-item">
+                    <span class="domain">Science:</span>
+                    <span class="gain positive">+8.0% pass@1</span>
+                </div>
+                <div class="impact-item">
+                    <span class="domain">Coding:</span>
+                    <span class="gain neutral">-0.6% (no improvement)</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What We Don't Claim -->
+    <section class="clarification">
+        <div class="container">
+            <h2>📝 What We Do & Don't Claim</h2>
+            <div class="claim-grid">
+                <div class="claim-box do">
+                    <h3>✓ We Show</h3>
+                    <ul>
+                        <li>Hand-crafted CoT-surface features work well in math</li>
+                        <li>They have narrow utility in science</li>
+                        <li>They fail for coding correctness prediction</li>
+                        <li>This is a <strong>measurement</strong> failure, not modeling failure</li>
+                    </ul>
+                </div>
+
+                <div class="claim-box dont">
+                    <h3>✗ We Don't Claim</h3>
+                    <ul>
+                        <li>All text-based verifiers must fail on coding</li>
+                        <li>Execution-aware or code-aware methods won't work</li>
+                        <li>LLM judges or raw-text classifiers are useless</li>
+                        <li>Hidden-state probes can't capture correctness</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Details -->
+    <section class="technical">
+        <div class="container">
+            <h2>⚙️ Technical Details</h2>
+            <div class="tech-specs">
+                <div class="spec-item">
+                    <span class="spec-label">Model:</span>
+                    <span class="spec-value">DeepSeek-R1-0528-Qwen3-8B</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Math Data:</span>
+                    <span class="spec-value">AIME24/25, BRUMO25, HMMT25 (7,680 runs)</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Science Data:</span>
+                    <span class="spec-value">GPQA (12,672 runs)</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Coding Data:</span>
+                    <span class="spec-value">LiveCodeBench-v5 (10,688 runs)</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Features:</span>
+                    <span class="spec-value">5 hand-crafted (tok_conf, traj_continuity, traj_novelty, traj_reflection_count, nc_mean)</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Probe:</span>
+                    <span class="spec-value">StandardScaler → SVD → LogisticRegression</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta">
+        <div class="container">
+            <h2>🚀 Explore the Research</h2>
+            <div class="cta-links">
+                <a href="https://github.com/Chi-Shan0707/code-not-text" class="cta-button primary">
+                    📦 GitHub Repository
+                </a>
+                <a href="https://github.com/Chi-Shan0707/code-not-text/blob/main/paper/paper_v13.pdf" class="cta-button secondary">
+                    📄 Full Paper (PDF)
+                </a>
+                <a href="mailto:yhchi25@m.fudan.edu.cn" class="cta-button secondary">
+                    ✉️ Contact Author
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2026 Yuhan Chi · Fudan University ·
+            <a href="https://github.com/Chi-Shan0707/code-not-text">code-not-text</a>
+            </p>
+            <p class="license">Apache 2.0 License</p>
+        </div>
+    </footer>
+
+    <script src="js/charts.js"></script>
+    <script src="js/animations.js"></script>
+</body>
+</html>
