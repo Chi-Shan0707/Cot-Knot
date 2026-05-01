@@ -36,6 +36,8 @@ Can cheap summaries of chain-of-thought (CoT) traces predict whether a solution 
 | **Science** | **0.799** [0.775, 0.822] | **0.841** | **+8.0%** |
 | **Coding** | 0.434 [0.404, 0.464] | 0.407 | −0.6% |
 
+**Note on Publication Status**: Due to circumstances beyond my control, this research could not be formally submitted to academic venues. The findings are shared here as a preprint and through the associated GitHub repository and personal website to ensure the work remains accessible to the research community.
+
 **Key insight**: These features measure different underlying constructs across domains. In math, they capture "failure to converge" in reasoning. In coding, where correctness requires execution, the same features measure exploratory effort—a mismatch between the measurement instrument and the target variable.
 
 ---
