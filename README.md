@@ -2,16 +2,16 @@
 
 # code-not-text
 
-### Code Correctness Is Not in the Text:<br>Five Methods, One Ceiling — Convergent Evidence for CoT Quality Measurement Breakdown in Coding
+### Cross-Domain Limits of Hand-Crafted CoT-Surface Features:<br>Strong in Math, Narrow in Science, Weak in Coding
 
 <p>
-  <img src="https://img.shields.io/badge/status-workshop%20paper%20v12-blue" alt="status" />
+  <img src="https://img.shields.io/badge/status-workshop%20paper%20v13-blue" alt="status" />
   <img src="https://img.shields.io/badge/methods-5%20convergent-6f42c1" alt="methods" />
   <img src="https://img.shields.io/badge/domains-math%20%7C%20science%20%7C%20coding-0a7e5a" alt="domains" />
   <img src="https://img.shields.io/badge/license-Apache--2.0-orange" alt="license" />
 </p>
 
-*Within this feature family, code correctness is not in the text.*
+*Hand-crafted CoT-surface features transfer well to math, only partly to science, and poorly to coding correctness on unseen problems.*
 
 [Core Finding](#core-finding) ·
 [Five Methods](#five-methods-one-ceiling) ·
@@ -26,21 +26,17 @@
 
 ## Core Finding
 
-We test whether token-trajectory features (per-token entropy signals + text-trajectory statistics)
-encode coding correctness in chain-of-thought traces.
-We use **five independent methods** on the same feature family, applied to three domains
-(math competitions, science, coding) with a single model — **DeepSeek-R1-0528-Qwen3-8B**.
+Can cheap summaries of chain-of-thought (CoT) traces predict whether a solution is correct? We test a single feature family—hand-crafted CoT-surface and token-trajectory features—on **DeepSeek-R1-0528-Qwen3-8B** across three domains: math, science, and coding.
 
-**All five methods converge on the same answer for coding: no.**
+**It depends on the domain.** In math, the signal is strong and emerges early. In science, the signal is usable but narrower and largely confidence-driven. In coding, the signal is weak and does not transport cleanly to unseen problems.
 
-| Domain | AUC-of-AUROC | AUROC@100% | Reranking Δ pass@1 |
-|--------|:------------:|:----------:|:------------------:|
+| Domain | AoA (AUC-of-AUROC) | AUROC@100% | Reranking Δ pass@1 |
+|:--------|:------------------:|:----------:|:------------------:|
 | **Math** | **0.958** [0.931, 0.980] | **0.982** | **+10.0%** |
 | **Science** | **0.799** [0.775, 0.822] | **0.841** | **+8.0%** |
-| Coding | 0.434 | 0.407 | −0.6% |
+| **Coding** | 0.434 [0.404, 0.464] | 0.407 | −0.6% |
 
-The coding probe falls *below* a single-feature token-confidence baseline (0.506). No method
-in our study lifts coding AUROC meaningfully above chance at full labels.
+**Key insight**: These features measure different underlying constructs across domains. In math, they capture "failure to converge" in reasoning. In coding, where correctness requires execution, the same features measure exploratory effort—a mismatch between the measurement instrument and the target variable.
 
 ---
 
@@ -49,21 +45,19 @@ in our study lifts coding AUROC meaningfully above chance at full labels.
 | # | Method | Best coding result | Verdict |
 |---|--------|-------------------|---------|
 | 1 | Interpretable probe (LogReg + SVD) | AoA 0.434 / AUROC@100 0.407 | Below baseline |
-| 2 | Broad feature sweep (83 scalars) | AUROC 0.556 (top-4 combo) | Marginal |
-| 3 | Nonlinear MLP classifier | AUROC 0.499–0.507 | No change |
-| 4 | **SSL pre-training** (42K unlabeled runs) | 0.537 at lf=5%; **0.454 at lf=100%** | Reg. only; ceiling persists |
+| 2 | Broad feature sweep (83 scalars) | AUROC 0.556 (top-4 combo) | Weak only |
+| 3 | Nonlinear MLP classifier | AUROC 0.499–0.507 | No meaningful gain |
+| 4 | SSL pre-training (42K unlabeled runs) | 0.537 at lf=5%; **0.454 at lf=100%** | Low-label regularizer only |
 | 5 | Token-level de-knotting ablation | AUROC Δ = +0.006 | Neutral |
 
-**Why SSL is the decisive experiment.** Self-supervised pre-training on 42,000 unlabeled CoT
-traces — including a domain-specific variant with VICReg anti-collapse, 5-term structured loss,
-and 500 training epochs — tops out near AUROC 0.5 for coding at full labels. The training loss
-decreases (structure is learned), but AUROC stays flat (correctness is not part of that structure).
-This rules out label scarcity as the bottleneck.
+**Why the convergence matters.** Five independent approaches—interpretable probes, feature engineering, nonlinear models, self-supervised learning, and surface-noise removal—all reach the same ceiling for coding. This rules out several plausible failure modes:
 
-**Why the de-knotting result matters.** Properly removing "knot" token spans (circular reasoning segments)
-from all five per-token signal arrays via fast-tokenizer offset mapping:
-- Math: AUROC *drops* by 0.049 — knot tokens are the discriminative signal itself
-- Coding: AUROC changes by +0.006 — no masking strategy recovers signal
+- **Not model capacity**: MLP classifiers don't escape the ceiling
+- **Not label scarcity**: SSL on 42K unlabeled traces still fails at full labels
+- **Not surface noise**: De-knotting doesn't recover signal
+- **Not feature engineering**: 83 coding-specific scalars don't close the gap
+
+The evidence supports a measurement explanation: code correctness depends on executable state evolution, which is not captured by token-trajectory summaries.
 
 ---
 
@@ -74,22 +68,31 @@ All quantitative claims reproduce from `results/tables/`. Key tables:
 | File | Contents |
 |------|----------|
 | `results/tables/bon_reranking_domain_pass1_ci.csv` | Best-of-N=64 pass@1 with bootstrap 95% CI |
-| `results/tables/deknot_alldomains_v2.csv` | De-knotting ablation: all 3 domains, v2 (proper token masking) |
+| `results/tables/deknot_alldomains_v2.csv` | De-knotting ablation: all 3 domains |
 | `results/tables/glm_knot_findings_v4.md` | Knot annotation summary (math/science/coding) |
 | `results/tables/aoa_bootstrap_ci.csv` | AoA bootstrap CI by domain |
+| `results/tables/coding_feature_family_ablation.csv` | Grouped feature ablation results |
+| `results/tables/cot_run_judge_scores.csv` | CoT-only run judge OOF predictions |
+
+### Cross-domain feature importance
+
+Permutation importance reveals different semantics across domains:
+
+- **Math**: `traj_reflection_count` (0.242), `traj_continuity` (0.092), `traj_novelty` (0.052) — trajectory-shaped signal
+- **Science**: `tok_gini_tail` (0.038), `tok_conf_recency` (0.033), `tok_conf_prefix` (0.033) — confidence-heavy signal
+- **Coding**: No strong, stable feature importance pattern
 
 ### SSL results
 
-SSL experiments are documented in `scripts/` and full results in
-`/home/jovyan/work/SVDomain/results/tables/domain_specific_ssl_v2.csv` (not in this repo — path-local).
-
-Key SSL v2 numbers at anchor=100%:
+Self-supervised pre-training shows domain-specific effects:
 
 | Domain | no_svd_lr (lf=5%) | ssl_v2_r24 (lf=5%) | Δ | ssl_v2_r24 (lf=100%) |
 |--------|:-----------------:|:------------------:|:-:|:--------------------:|
 | Math    | 0.898 | 0.896 | −0.2pp | 0.944 |
 | Science | 0.607 | **0.674** | +6.7pp | 0.762 |
-| Coding  | 0.488 | **0.537** | +4.9pp | **0.454** ← ceiling |
+| Coding  | 0.488 | **0.537** | +4.9pp | **0.454** ← ceiling persists |
+
+SSL helps in low-label regimes but doesn't change the full-label ceiling.
 
 ---
 
@@ -98,28 +101,27 @@ Key SSL v2 numbers at anchor=100%:
 ```
 code-not-text/
 ├── paper/
-│   ├── paper_v12.tex           # Current paper source (v12, multi-method)
-│   └── paper_v12.pdf           # Compiled PDF
+│   ├── paper_v13.tex           # Current paper source (v13, cross-domain focus)
+│   └── paper_v13.pdf           # Compiled PDF
 ├── figures/
-│   ├── fig_auroc_by_anchor_v12.pdf   # Fig 1: AUROC curves + AoA bar chart
-│   ├── fig_ssl_ceiling_v12.pdf       # Fig 2: SSL ceiling — coding vs science
-│   ├── fig_reranking_v12.pdf         # Fig 3: Best-of-N reranking pass@1
-│   ├── fig_deknot_alldomains_v12.pdf # Fig 4: De-knotting ablation (all 3 domains)
+│   ├── fig_auroc_by_anchor_v12_5.pdf   # Fig 1: AUROC curves + AoA bar chart
+│   ├── fig_ssl_ceiling_v12_5.pdf       # Fig 2: SSL ceiling — coding vs science
+│   ├── fig_reranking_v12_5.pdf         # Fig 3: Best-of-N reranking pass@1
+│   ├── fig_deknot_alldomains_v12_5.pdf # Fig 4: De-knotting ablation (all 3 domains)
 │   └── fig_knot_domain_profiles_v3.pdf  # Legacy: feature gap in break-positive subsets
 ├── scripts/
-│   ├── gen_figures_v12.py            # Generate all 4 paper figures (requires local data paths)
-│   ├── deknot_alldomains_v2.py       # De-knotting experiment v2 (all domains, token masking)
-│   ├── deknot_coding_experiment.py   # De-knotting experiment v1 (coding only)
-│   ├── plot_knot_domain_profiles.py  # Legacy figure script
-│   ├── run_glm_*_knot_labeling*.py   # GLM knot annotation pipelines
-│   ├── analyze_glm_knot_v4.py        # Cross-domain knot analysis
-│   ├── compare_glm_knot_v4_domains.py
-│   └── build_glm_knot_error_enrichment_v4.py
+│   ├── gen_figures_v12_5.py            # Generate all 4 paper figures
+│   ├── deknot_alldomains_v2.py         # De-knotting experiment v2 (all domains)
+│   ├── deknot_coding_experiment.py     # De-knotting experiment v1 (coding only)
+│   ├── analyze_glm_knot_v4.py          # Cross-domain knot analysis
+│   ├── compare_glm_knot_v4_domains.py  # Domain comparison utilities
+│   ├── run_glm_*_knot_labeling*.py     # GLM knot annotation pipelines
+│   └── knot_glm_common.py              # Shared utilities
 ├── results/
-│   └── tables/                       # All CSV/MD result tables
-├── temp/                             # Old drafts, review notes (gitignored)
+│   └── tables/                          # All CSV/MD result tables
+├── temp/                               # Old drafts, review notes (gitignored)
 ├── .gitignore
-├── LICENSE
+├── LICENSE                             # Apache 2.0
 └── README.md
 ```
 
@@ -131,8 +133,8 @@ code-not-text/
 
 ```bash
 cd workshop/cotknot
-python scripts/gen_figures_v12.py
-# Outputs: figures/fig_*_v12.pdf
+python scripts/gen_figures_v12_5.py
+# Outputs: figures/fig_*_v12_5.pdf
 ```
 
 ### De-knotting experiment (requires GLM API key + NAD cache)
@@ -148,7 +150,7 @@ python /path/to/scripts/deknot_alldomains_v2.py
 
 ```bash
 cd paper
-pdflatex paper_v12.tex && pdflatex paper_v12.tex
+pdflatex paper_v13.tex && pdflatex paper_v13.tex
 ```
 
 ---
@@ -158,11 +160,11 @@ pdflatex paper_v12.tex && pdflatex paper_v12.tex
 **Model:** DeepSeek-R1-0528-Qwen3-8B
 **Data:** AIME24/25 + BRUMO25 + HMMT25 (math), GPQA (science), LiveCodeBench-v5 (coding)
 **Features:** `tok_conf`, `tok_gini`, `tok_logprob`, `tok_neg_entropy`, `tok_selfcert` (per-token) +
-`traj_continuity`, `traj_novelty`, `traj_reflection_count` (trajectory)
+`traj_continuity`, `traj_novelty`, `traj_reflection_count` (trajectory) + `nc_mean` (neuron)
 
-The central claim: these features measure "failure to converge" in math (where convergence has a
-closed-form answer) but measure "exploratory effort" in coding (where correctness requires execution).
-Same feature name, different underlying construct — a measurement non-invariance.
+**Central claim**: Within this single-model study, cheap hand-crafted CoT-surface features are domain-specific measurement tools. They work very well in math, partly in science, and poorly in coding.
+
+**What this does NOT claim**: This does not rule out raw-text classifiers, code-aware models, execution-aware selectors, hidden-state probes, or LLM judges. A more likely explanation is that coding needs different signals, such as execution-aware ones.
 
 ---
 
@@ -174,8 +176,8 @@ Apache 2.0. See `LICENSE`.
 
 ```bibtex
 @misc{chi2026codenottext,
-  title   = {Code Correctness Is Not in the Text: Five Methods, One Ceiling ---
-             Convergent Evidence for {CoT} Quality Measurement Breakdown in Coding},
+  title   = {Cross-Domain Limits of Hand-Crafted CoT-Surface Features:
+             Strong in Math, Narrow in Science, Weak in Coding},
   author  = {Yuhan Chi},
   year    = {2026},
   note    = {Workshop paper. Code: https://github.com/Chi-Shan0707/code-not-text}
@@ -184,4 +186,4 @@ Apache 2.0. See `LICENSE`.
 
 ## Contact
 
-Yuhan Chi · Fudan University · `masterwuguicyh@gmail.com`
+Yuhan Chi · Fudan University · `yhchi25@m.fudan.edu.cn`
