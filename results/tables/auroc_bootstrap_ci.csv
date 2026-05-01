@@ -1,0 +1,4 @@
+domain,auroc_slot100,ci_lo,ci_hi
+math,0.765,0.6994,0.8235
+science,0.4208,0.0625,1.0
+coding,0.4706,0.3216,0.6235

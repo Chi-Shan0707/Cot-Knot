@@ -1,0 +1,4 @@
+domain,aoa,ci_lo,ci_hi,n_caches
+math,0.9581,0.9313,0.9803,7
+science,0.7985,0.7752,0.8218,2
+coding,0.4342,0.404,0.464,1

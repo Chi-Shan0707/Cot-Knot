@@ -1,0 +1,4 @@
+domain,n_problems,n_candidates,baseline,baseline_ci_lo,baseline_ci_hi,probe,probe_ci_lo,probe_ci_hi,delta
+math,120,64,0.6417,0.5719,0.7115,0.7417,0.6583,0.8167,0.1
+science,198,64,0.6017,0.5496,0.6519,0.6818,0.6162,0.7475,0.0801
+coding,167,64,0.6168,0.5449,0.6886,0.6108,0.5389,0.6826,-0.006
